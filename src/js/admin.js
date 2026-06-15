@@ -138,8 +138,9 @@ document.getElementById('save-patient').addEventListener('click', () => {
   const type = document.getElementById('add-type').value;
 
   // Автоматическое определение длительности
-  if (type === 'ФЕМТО') let duration = 15;
-  else let duration = 10 // по умолчанию;
+  let duration;
+  if (type === 'ФЕМТО') duration = 15;
+  else duration = 10 // по умолчанию;
 
   const patient = {
     fio, card, bday, phone, type, duration,
