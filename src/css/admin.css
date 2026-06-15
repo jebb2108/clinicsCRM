@@ -1,84 +1,295 @@
-/* ========== Форма добавления ========== */
-.add-form .form-row {
-  margin-bottom: 1rem;
+/* ========== Панель инструментов ========== */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
-/* Вторая строка: тип операции на всю ширину */
-.add-form .form-row:nth-child(2) label {
+.toolbar h2 {
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.8rem;
+}
+
+.actions {
   display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.start-time-label {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0.25rem 1rem;
+  border-radius: 4px;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
 }
-.add-form .form-row:nth-child(2) select {
+
+.start-time-label input {
+  padding: 0.35rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+.start-time-label input:focus {
+  border-color: rgba(255, 255, 255, 0.4);
+  outline: none;
+}
+
+/* ========== Кнопки ========== */
+.btn-add,
+.pause-btn,
+.download-btn {
+  padding: 0.5rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-add:hover,
+.pause-btn:hover,
+.download-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ========== Форма добавления ========== */
+.add-form {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.add-form.hidden {
+  display: none;
+}
+
+.add-form h3 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.2rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.form-row label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.9rem;
+}
+
+/* Первая строка – распределяем поля поровну */
+.form-row:first-child label {
   flex: 1;
+}
+
+.form-row input,
+.form-row select,
+.form-row textarea {
   padding: 0.4rem 0.8rem;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 4px;
   color: #fff;
   font-size: 0.9rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+  border-color: rgba(255, 255, 255, 0.4);
+  outline: none;
+}
+
+/* Вторая строка: тип операции на всю ширину */
+.form-row:nth-child(2) label {
+  flex: 1;
+}
+
+.form-row:nth-child(2) select {
+  flex: 1;
+  max-width: 300px;
 }
 
 /* Третья строка: особенности */
-.add-form .form-row:nth-child(3) label {
-  display: flex;
+.form-row:nth-child(3) label {
+  flex: 1;
   align-items: flex-start;
-  gap: 8px;
 }
-.add-form .form-row:nth-child(3) textarea {
+
+.form-row:nth-child(3) textarea {
   flex: 1;
   resize: vertical;
-  width: 100%;
   min-height: 50px;
-  padding: 0.4rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 4px;
-  color: #fff;
 }
 
-/* ========== Таблица: приятные отступы между строками ========== */
+/* Кнопки формы */
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.btn-primary,
+.btn-cancel {
+  padding: 0.5rem 2rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.btn-primary {
+  background: #4a9eff;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #3a8aeb;
+}
+
+.btn-cancel {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ========== Таблица ========== */
 #patients-table {
+  width: 100%;
   border-collapse: separate;
   border-spacing: 0 10px;
+  margin-top: 1rem;
 }
 
-/* Фон и закругления для ячеек  */
+#patients-table thead th {
+  text-align: left;
+  padding: 0.75rem 10px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#patients-table thead th:first-child {
+  padding-left: 16px;
+}
+
+#patients-table thead th:last-child {
+  padding-right: 16px;
+}
+
 #patients-table tbody td {
   background: rgba(255, 255, 255, 0.06);
   padding: 12px 10px;
   border: none;
   transition: background 0.2s;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9rem;
 }
 
-/* Закругления углов строки */
 #patients-table td:first-child {
   border-radius: 8px 0 0 8px;
   padding-left: 16px;
 }
+
 #patients-table td:last-child {
   border-radius: 0 8px 8px 0;
   padding-right: 16px;
 }
 
-/* Ховер для всей строки */
 #patients-table tbody tr:hover td {
   background: rgba(255, 255, 255, 0.12);
 }
 
-/* Пауза – сохраняем особый стиль */
+/* Пауза */
 tr.pause-row td {
   background: rgba(255, 255, 255, 0.08);
   color: rgba(255, 255, 255, 0.65);
 }
+
+tr.pause-row td:nth-child(3) {
+  text-align: center;
+  font-weight: 600;
+}
+
 tr.pause-row:hover td {
   background: rgba(255, 255, 255, 0.14);
 }
 
-/* Адаптация ширины drag-ручки */
-td.drag-handle {
+/* Drag-and-drop ручка */
+.drag-handle {
   text-align: center;
   font-size: 1.2rem;
   cursor: grab;
   color: rgba(255, 255, 255, 0.5);
+  width: 40px;
 }
+
+tr.drag-over td {
+  background: rgba(74, 158, 255, 0.2) !important;
+}
+
+/* Кнопка удаления */
+.btn-delete {
+  background: none;
+  border: 1px solid rgba(255, 100, 100, 0.4);
+  color: #ff6b6b;
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-delete:hover {
+  background: rgba(255, 100, 100, 0.2);
+  border-color: #ff6b6b;
+}
+
+/* Ширина колонок */
+th:first-child, td:first-child { width: 5%; }
+th:nth-child(2), td:nth-child(2) { width: 10%; }
+th:nth-child(3), td:nth-child(3) { width: 20%; }
+th:nth-child(4), td:nth-child(4) { width: 10%; }
+th:nth-child(5), td:nth-child(5) { width: 10%; }
+th:nth-child(6), td:nth-child(6) { width: 15%; }
+th:nth-child(7), td:nth-child(7) { width: 15%; }
+th:nth-child(8), td:nth-child(8) { width: 8%; }
+th:last-child, td:last-child { width: 7%; }
