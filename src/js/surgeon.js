@@ -53,7 +53,6 @@ function renderTable() {
         <td>${showSelect(index, flapSelect)}</td>
         <td>${showSelect(index, typeSelect)}</td>
         <td>${escapeHtml(item.notes || '—')}</td>
-        <td></td>
       `;
     } else {
       row.classList.add('pause-row');
