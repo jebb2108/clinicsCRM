@@ -2,13 +2,6 @@ if (sessionStorage.getItem('role') !== 'engineer') {
   window.location.href = '/index.html';
 }
 
-window.addEventListener('storage', function(event) {
-  if (event.key === 'clinic_operation_list') {
-    console.log('Данные обновлены из другого окна, перерисовываем таблицу');
-    renderTable();
-  }
-});
-
 const tbody = document.getElementById('creds-body');
 const savedNotification = document.getElementById('saved-notification');
 const saveBtn = document.getElementById('save-creds');

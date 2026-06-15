@@ -2,13 +2,6 @@ if (sessionStorage.getItem('role') !== 'surgeon') {
   window.location.href = '/index.html';
 }
 
-window.addEventListener('storage', function(event) {
-  if (event.key === 'clinic_operation_list') {
-    console.log('Данные обновлены из другого окна, перерисовываем таблицу');
-    renderTable();
-  }
-});
-
 const tableBody = document.getElementById('table-body');
 const savedNotification = document.getElementById('saved-notification');
 
@@ -67,14 +60,14 @@ function renderTable() {
   // Автосохранение при изменении выпадающих списков
   document.querySelectorAll('.ring-select').forEach(select => {
     select.addEventListener('change', function () {
-      updatePatient(this.dataset.index, { ring: this.value });
+      updatePatient(parseInt(this.dataset.index, 10), { ring: this.value });
       showSaved();
     });
   });
 
   document.querySelectorAll('.flap-select').forEach(select => {
     select.addEventListener('change', function () {
-      updatePatient(this.dataset.index, { flap: this.value });
+      updatePatient(parseInt(this.dataset.index, 10), { ring: this.value });
       showSaved();
     });
   });

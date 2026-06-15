@@ -2,13 +2,6 @@ if (sessionStorage.getItem('role') !== 'admin') {
   window.location.href = '/index.html';
 }
 
-window.addEventListener('storage', function(event) {
-  if (event.key === 'clinic_operation_list') {
-    console.log('Данные обновлены из другого окна, перерисовываем таблицу');
-    renderTable();
-  }
-});
-
 const tableBody = document.getElementById('table-body');
 const addForm = document.getElementById('add-form');
 let draggedRowIndex = null;
