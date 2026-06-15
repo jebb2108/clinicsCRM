@@ -187,7 +187,10 @@ document.getElementById('start-time').addEventListener('change', function () {
 document.getElementById('download-word').addEventListener('click', () => {
   const list = getOperationList();
   const startTimes = calculateStartTimes();
-  let html = `<html><head><meta charset="utf-8"><title>Список операций</title></head><body>
+  let html = `<!DOCTYPE html>
+  <html>
+  <head><meta charset="UTF-8"><title>Список операций</title></head>
+  <body>
     <h2>Список пациентов:</h2>
     <table border="1" cellpadding="5" style="border-collapse:collapse;">
       <tr><th>Время</th><th>ФИО</th><th>№ карты</th><th>Телефон</th><th>Особенности</th></tr>`;
@@ -203,18 +206,20 @@ document.getElementById('download-word').addEventListener('click', () => {
     } else {
       html += `<tr style="background-color:#f1f3f5;">
         <td>${startTimes[idx]}</td>
-        <td colspan="7" style="text-align:center;">ПАУЗА (${item.duration} мин)</td>
+        <td colspan="4" style="text-align:center;">ПАУЗА (${item.duration} мин)</td>
       </tr>`;
     }
   });
-  html += '</table></body></html>';
+  html += `</table></body></html>`;
 
-  const blob = htmlDocx.asBlob(html);
+  // Создаём Blob с типом application/msword
+  const blob = new Blob([html], { type: 'application/msword' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  currentDate = Date.now().toLocaleString('ru-RU')
+  const now = new Date();
+  const dateStr = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}_${now.getHours()}-${now.getMinutes()}`;
   a.href = url;
-  a.download = `список_операций_${currentDate}.docx`;
+  a.download = `список_операций_${dateStr}.doc`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
