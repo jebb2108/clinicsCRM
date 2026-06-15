@@ -147,12 +147,10 @@ document.getElementById('save-patient').addEventListener('click', () => {
   else if (type === 'ФРК') duration = 10;
 
   const patient = {
-    fio,
-    card,
-    phone,
-    type,
-    notes: document.getElementById('add-notes').value.trim(),
-    duration
+    fio, card, phone, type, duration,
+    notes: document.getElementById('add-notes').value.trim() || '—',
+    ring: document.getElementById('add-ring')?.value.trim() || '—',
+    flap: document.getElementById('add-flap')?.value.trim() || '—'
   };
   addPatient(patient);
   clearAddForm();
