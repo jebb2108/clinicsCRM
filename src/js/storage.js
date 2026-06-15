@@ -58,7 +58,8 @@ function updatePatient(index, updatedFields) {
   console.log('updatePatient вызван с index', index, 'поля', updatedFields);
   const list = getOperationList();
   console.log('Текущий пациент', list[index]);
-  if (list[index] && list[index].type === 'patient') {
+  // Проверяем, что элемент не является паузой (у пауз type === 'pause')
+  if (list[index] && list[index].type !== 'pause') {
     list[index] = { ...list[index], ...updatedFields };
     saveOperationList(list);
     console.log('Сохранено:', list[index]);
@@ -66,6 +67,7 @@ function updatePatient(index, updatedFields) {
     console.error('Пациент не найден по индексу', index);
   }
 }
+
 // === Учётные данные ===
 function getCredentials() {
   const data = localStorage.getItem(CREDENTIALS_KEY);
