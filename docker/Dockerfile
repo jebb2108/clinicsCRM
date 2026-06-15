@@ -1,6 +1,6 @@
 FROM nginx:alpine
 
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY docker/nginx.conf /etc/nginx/nginx.conf
 COPY src /usr/share/nginx/html
 
 EXPOSE 8443
