@@ -1,5 +1,5 @@
 if (sessionStorage.getItem('role') !== 'engineer') {
-  window.location.href = '/index.html';
+  window.location.href = '../index.html';
 }
 
 const tbody = document.getElementById('creds-body');

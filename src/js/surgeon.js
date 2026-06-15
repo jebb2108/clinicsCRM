@@ -1,5 +1,5 @@
 if (sessionStorage.getItem('role') !== 'surgeon') {
-  window.location.href = '/index.html';
+  window.location.href = '../index.html';
 }
 
 const tableBody = document.getElementById('table-body');

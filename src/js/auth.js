@@ -25,7 +25,7 @@ document.getElementById('login-form').addEventListener('submit', function(e) {
     sessionStorage.setItem('role', role);
     sessionStorage.setItem('userName', displayName);
     sessionStorage.setItem('loginTime', new Date().toLocaleString('ru-RU'));
-    window.location.href = `/src/pages/${role}.html`;
+    window.location.href = `/pages/${role}.html`;
   } else {
     errorMsg.textContent = 'Неверный логин или пароль';
   }

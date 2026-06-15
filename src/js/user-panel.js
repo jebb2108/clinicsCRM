@@ -20,7 +20,7 @@ const userInfo = function showUserInfo() {
   if (logoutBtn) {
     logoutBtn.addEventListener('click', function () {
       sessionStorage.clear();
-      window.location.href = '/index.html';
+      window.location.href = '../index.html';
     });
   }
 }
