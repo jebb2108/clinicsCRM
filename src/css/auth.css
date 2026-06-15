@@ -1,0 +1,113 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, sans-serif;
+  background: #0b1a2e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #e0e5ec;
+}
+
+.auth-container {
+  background: #0b1a2e;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 2.5rem;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 420px;
+}
+
+.auth-container h2 {
+  text-align: center;
+  margin-bottom: 1.8rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+/* Поля ввода и селект */
+.form-group select,
+.form-group input {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.form-group input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.form-group select:focus,
+.form-group input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+/* ---------- Кастомная стрелка для выпадающего списка ---------- */
+.form-group select {
+  appearance: none;                     /* убираем нативную стрелку */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 2.5rem;               /* место для иконки */
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.8rem center;
+  background-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* Убираем стрелку в IE */
+.form-group select::-ms-expand {
+  display: none;
+}
+
+/* Опции выпадающего списка */
+.form-group select option {
+  background: #1e2a3a;
+  color: #ffffff;
+}
+
+/* ---------- Кнопка "Войти" ---------- */
+button[type="submit"] {
+  width: 100%;
+  padding: 0.75rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  margin-top: 0.5rem;
+}
+
+button[type="submit"]:hover {
+  background: rgba(255, 255, 255, 0.1);   /* лёгкий серый оттенок */
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+}
+
+.error-message {
+  color: #f87171;
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+}

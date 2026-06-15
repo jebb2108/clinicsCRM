@@ -1,0 +1,306 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, sans-serif;
+  background: #0b1a2e;                  /* глубокий тёмно-синий */
+  color: #ffffff;
+  min-height: 100vh;
+  padding: 2rem;
+  margin: 0;
+}
+
+/* ---------- user‑panel (общий для всех) ---------- */
+.user-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  margin-bottom: 1.8rem;
+  color: #ffffff;
+  font-family: inherit;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1rem;
+}
+
+.user-name {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.role-badge {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  border-radius: 4px;
+  padding: 0.2rem 0.8rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.logout-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.75);
+  padding: 0.3rem 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.logout-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+}
+
+.info-line {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+.info-line span {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/* ---------- Основная панель (dashboard) ---------- */
+.dashboard {
+  max-width: 1400px;
+  margin: 0 auto;
+  background: #0b1a2e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: none;
+}
+
+/* ---------- Кнопки ---------- */
+button {
+  padding: 0.55rem 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.75);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+button:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+}
+
+button:active {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ---------- Таблицы ---------- */
+table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.85rem 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.65);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+td {
+  padding: 0.8rem 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.9rem;
+  background: transparent;
+  color: #ffffff;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+tr:hover td {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* ---------- Форма добавления/редактирования ---------- */
+.add-form {
+  background: #0b1a2e;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 1.8rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: none;
+}
+
+.add-form.hidden {
+  display: none;
+}
+
+.add-form h3 {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+  font-size: 1.4rem;
+  margin: 0 0 1.2rem 0;
+  border-left: 4px solid rgba(255, 255, 255, 0.25);
+  padding-left: 12px;
+}
+
+.form-row {
+  display: flex;
+  gap: 1.2rem;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.form-row label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.65);
+  flex: 1 1 180px;
+}
+
+.form-row input,
+.form-row select,
+.form-row textarea {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  transition: 0.15s;
+}
+
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+  border-color: rgba(255, 255, 255, 0.4);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 1.5rem;
+}
+
+/* ---------- Утилиты ---------- */
+.hidden {
+  display: none;
+}
+
+.btn-primary {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.btn-cancel {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+}
+
+.btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.drag-handle {
+  cursor: grab;
+  color: rgba(255, 255, 255, 0.3);
+  text-align: center;
+  font-size: 1.1rem;
+  user-select: none;
+}
+
+tr.draggable {
+  cursor: grab;
+}
+
+tr.draggable:active {
+  cursor: grabbing;
+}
+
+tr.drag-over td {
+  background: rgba(255, 255, 255, 0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.delete-cell {
+  text-align: center;
+}
+
+.btn-delete {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75);
+  cursor: pointer;
+}
+
+.btn-delete:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.dashboard-header h2 {
+  margin: 0;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1.6rem;
+  margin-bottom: 2rem;
+}

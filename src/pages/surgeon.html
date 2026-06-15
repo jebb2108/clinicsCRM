@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Хирург – Список пациентов</title>
+  <link rel="stylesheet" href="/src/css/common.css">
+  <link rel="stylesheet" href="/src/css/surgeon.css">
+</head>
+<body>
+
+  <!-- Панель пользователя -->
+  <div class="user-panel">
+    <div class="user-info">
+      Добро пожаловать, <span id="user-name-display" class="user-name"></span>
+    </div>
+    <div class="info-line">
+      Сегодня: <span id="current-date"></span>
+    </div>
+    <button id="logout-btn" class="logout-btn">Выйти</button>
+  </div>
+
+  <!-- Основной контент -->
+  <div class="dashboard">
+    <div class="dashboard-header">
+      <h2>Список пациентов</h2>
+      <div id="saved-notification" class="saved-notification hidden">✓ Сохранено</div>
+    </div>
+    <table id="surgeon-table">
+      <thead>
+        <tr>
+          <th>Время начала</th>
+          <th>ФИО</th>
+          <th>№ карты</th>
+          <th>Кольцо</th>
+          <th>Лоскут</th>
+          <th>Телефон</th>
+          <th>Особенности</th>
+          <th>Операция</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+  </div>
+
+  <script src="/src/js/storage.js"></script>
+  <script src="/src/js/surgeon.js"></script>
+</body>
+</html>

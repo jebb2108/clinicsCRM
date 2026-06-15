@@ -1,0 +1,75 @@
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.toolbar h2 {
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.8rem;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.start-time-label {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0.25rem 1rem;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.start-time-label input {
+  padding: 0.35rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+.start-time-label input:focus {
+  border-color: rgba(255, 255, 255, 0.4);
+  outline: none;
+}
+
+/* ширина колонок под админскую таблицу (10 колонок) */
+th:first-child, td:first-child { width: 30px; }
+th:nth-child(2), td:nth-child(2) { width: 80px; }
+th:nth-child(3), td:nth-child(3) { width: 18%; }
+th:nth-child(4), td:nth-child(4) { width: 8%; }
+th:nth-child(5), td:nth-child(5) { width: 6%; }
+th:nth-child(6), td:nth-child(6) { width: 6%; }
+th:nth-child(7), td:nth-child(7) { width: 10%; }
+th:nth-child(8), td:nth-child(8) { width: 10%; }
+th:nth-child(9), td:nth-child(9) { width: 14%; }
+th:last-child, td:last-child { width: 70px; }
+
+/* пауза */
+tr.pause-row td {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.65);
+}
+
+tr.pause-row td:nth-child(3) {
+  text-align: center;
+  font-weight: 600;
+}
+
+tr.pause-row:hover td {
+  background: rgba(255, 255, 255, 0.12);
+}

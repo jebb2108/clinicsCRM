@@ -1,0 +1,64 @@
+/* engineer.css – панель инженера, единый стиль */
+
+/* Кнопка сохранения */
+.btn-save {
+  margin-top: 1.5rem;
+  padding: 0.55rem 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-save:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+}
+
+/* Поля ввода внутри таблицы */
+td input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  color: #ffffff;
+  padding: 0.4rem;
+  width: 90%;
+  font-size: 0.9rem;
+}
+
+td input:focus {
+  border-color: rgba(255, 255, 255, 0.4);
+  outline: none;
+}
+
+/* Ширина колонок таблицы (4 колонки) */
+th:first-child, td:first-child { width: 15%; }
+th:nth-child(2), td:nth-child(2) { width: 25%; }
+th:nth-child(3), td:nth-child(3) { width: 25%; }
+th:last-child, td:last-child { width: 35%; }
+
+/* Уведомление "Сохранено" */
+.saved-notification {
+  background: none;
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  backdrop-filter: blur(4px);
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+}
+
+.saved-notification.hidden {
+  opacity: 0;
+  pointer-events: none;
+}

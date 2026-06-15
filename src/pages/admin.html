@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Администратор</title>
+  <link rel="stylesheet" href="/src/css/common.css">
+  <link rel="stylesheet" href="/src/css/admin.css">
+</head>
+<body>
+
+<div class="user-panel">
+  <div class="user-info">
+    Добро пожаловать, <span id="user-name" class="user-name"></span>
+  </div>
+  <div class="info-line">
+    Сегодня: <span id="current-date"></span>
+  </div>
+  <button id="logout-btn" class="logout-btn">Выйти</button>
+</div>
+
+<div class="dashboard">
+  <div class="toolbar">
+    <h2>Список операций</h2>
+    <div class="actions">
+      <button id="toggle-add-form" class="btn-add">Добавить запись</button>
+      <button id="add-pause-btn" class="pause-btn">Добавить паузу</button>
+      <button id="download-word" class="download-btn">Скачать Word</button>
+      <label class="start-time-label">
+        Начало опер дня: <input type="time" id="start-time" value="09:00">
+      </label>
+    </div>
+  </div>
+
+  <div id="add-form" class="add-form hidden">
+  <h3>Новая запись</h3>
+  <div class="form-row">
+    <label>ФИО *: <input type="text" id="add-fio" required></label>
+    <label>№ медкарты *: <input type="text" id="add-card" required></label>
+    <label>Телефон *: <input type="text" id="add-phone" required></label>
+  </div>
+  <div class="form-row">
+    <label>Тип операции:
+      <select id="add-type">
+        <option value="ФЕМТО">ФЕМТО</option>
+        <option value="ФРК">ФРК</option>
+        <option value="ДОКОРРЕКЦИЯ">ДОКОРРЕКЦИЯ</option>
+        <option value="ПТК">ПТК</option>
+      </select>
+    </label>
+  </div>
+  <div class="form-row">
+    <label>Особенности: <textarea id="add-notes" rows="2"></textarea></label>
+  </div>
+  <div class="form-actions">
+    <button id="save-patient" class="btn-primary">Сохранить</button>
+    <button id="cancel-add" class="btn-cancel">Отмена</button>
+  </div>
+</div>
+
+  <!-- Таблица -->
+  <table id="patients-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Время начала</th>
+        <th>ФИО</th>
+        <th>№ карты</th>
+        <th>Кольцо</th>
+        <th>Лоскут</th>
+        <th>Телефон</th>
+        <th>Операция</th>
+        <th>Особенности</th>
+        <th>Действия</th>
+      </tr>
+    </thead>
+    <tbody id="table-body"></tbody>
+  </table>
+</div>
+<script src="/src/js/storage.js"></script>
+<script src="/src/js/user-panel.js"></script>
+<script src="/src/js/admin.js"></script>
+</body>
+</html>
