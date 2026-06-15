@@ -3,7 +3,7 @@ if (sessionStorage.getItem('role') !== 'nurse') {
 }
 
 window.addEventListener('storage', function(event) {
-  if (event.key === LIST_KEY) {
+  if (event.key === 'clinic_operation_list') {
     console.log('Данные обновлены из другого окна, перерисовываем таблицу');
     renderTable();
   }

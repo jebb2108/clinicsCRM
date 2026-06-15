@@ -1,9 +1,9 @@
 if (sessionStorage.getItem('role') !== 'surgeon') {
-  window.location.href = '../index.html';
+  window.location.href = '/index.html';
 }
 
 window.addEventListener('storage', function(event) {
-  if (event.key === LIST_KEY) {
+  if (event.key === 'clinic_operation_list') {
     console.log('Данные обновлены из другого окна, перерисовываем таблицу');
     renderTable();
   }

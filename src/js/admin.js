@@ -1,9 +1,9 @@
 if (sessionStorage.getItem('role') !== 'admin') {
-  window.location.href = '../index.html';
+  window.location.href = '/index.html';
 }
 
 window.addEventListener('storage', function(event) {
-  if (event.key === LIST_KEY) {
+  if (event.key === 'clinic_operation_list') {
     console.log('Данные обновлены из другого окна, перерисовываем таблицу');
     renderTable();
   }
@@ -31,11 +31,11 @@ function renderTable() {
         <td><strong>${startTimes[index] || '—'}</strong></td>
         <td>${escapeHtml(item.fio || '')}</td>
         <td>${escapeHtml(item.card || '')}</td>
-        <td>${escapeHtml(item.ring || '')}</td>
-        <td>${escapeHtml(item.flap || '')}</td>
+        <td>${escapeHtml(item.ring || '—')}</td>
+        <td>${escapeHtml(item.flap || '—')}</td>
         <td>${escapeHtml(item.phone || '')}</td>
         <td>${escapeHtml(item.type || '')}</td>
-        <td>${escapeHtml(item.notes || '')}</td>
+        <td>${escapeHtml(item.notes || '—')}</td>
         <td class="delete-cell"><button class="btn-delete" data-index="${index}">Удалить</button></td>
       `;
     } else {
