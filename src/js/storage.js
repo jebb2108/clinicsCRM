@@ -136,5 +136,3 @@ function escapeHtml(text) {
   };
   return String(text).replace(/[&<>"']/g, m => map[m]);
 }
-
-console.log('storage.js загружен');
