@@ -27,8 +27,8 @@ function renderTable() {
         <td>${escapeHtml(item.ring || '—')}</td>
         <td>${escapeHtml(item.flap || '—')}</td>
         <td>${escapeHtml(item.phone || '')}</td>
-        <td>${escapeHtml(item.type || '')}</td>
         <td>${escapeHtml(item.notes || '—')}</td>
+        <td>${escapeHtml(item.type || '')}</td>
         <td class="delete-cell"><button class="btn-delete" data-index="${index}">Удалить</button></td>
       `;
     } else {
