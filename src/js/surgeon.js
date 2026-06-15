@@ -67,7 +67,7 @@ function renderTable() {
 
   document.querySelectorAll('.flap-select').forEach(select => {
     select.addEventListener('change', function () {
-      updatePatient(parseInt(this.dataset.index, 10), { ring: this.value });
+      updatePatient(parseInt(this.dataset.index, 10), { flap: this.value });
       showSaved();
     });
   });
