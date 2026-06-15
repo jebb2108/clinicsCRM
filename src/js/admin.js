@@ -24,8 +24,7 @@ function renderTable() {
         <td><strong>${startTimes[index] || '—'}</strong></td>
         <td>${escapeHtml(item.fio || '')}</td>
         <td>${escapeHtml(item.card || '')}</td>
-        <td>${escapeHtml(item.ring || '—')}</td>
-        <td>${escapeHtml(item.flap || '—')}</td>
+        <td>${escapeHtml(item.bday) || ''}</td>
         <td>${escapeHtml(item.phone || '')}</td>
         <td>${escapeHtml(item.notes || '—')}</td>
         <td>${escapeHtml(item.type || '')}</td>
@@ -117,6 +116,7 @@ document.getElementById('add-type').addEventListener('change', function () {
 document.getElementById('save-patient').addEventListener('click', () => {
   const fio = document.getElementById('add-fio').value.trim();
   const card = document.getElementById('add-card').value.trim();
+  const bday = document.getElementById('add-bday').value.trim();
   const phone = document.getElementById('add-phone').value.trim();
 
   if (!fio) {
@@ -127,6 +127,9 @@ document.getElementById('save-patient').addEventListener('click', () => {
     alert('Поле "№ медкарты" обязательно для заполнения.');
     return;
   }
+  if (!bday) {
+    alert('Поле "Дата рождения" обязательно для заполнения.');
+  }
   if (!phone) {
     alert('Поле "Телефон" обязательно для заполнения.');
     return;
@@ -135,12 +138,11 @@ document.getElementById('save-patient').addEventListener('click', () => {
   const type = document.getElementById('add-type').value;
 
   // Автоматическое определение длительности
-  let duration = 15; // по умолчанию
-  if (type === 'ФЕМТО') duration = 15;
-  else if (type === 'ФРК') duration = 10;
+  if (type === 'ФЕМТО') let duration = 15;
+  else let duration = 10 // по умолчанию;
 
   const patient = {
-    fio, card, phone, type, duration,
+    fio, card, bday, phone, type, duration,
     notes: document.getElementById('add-notes').value.trim() || '—',
     ring: document.getElementById('add-ring')?.value.trim() || '—',
     flap: document.getElementById('add-flap')?.value.trim() || '—'
@@ -154,6 +156,7 @@ document.getElementById('save-patient').addEventListener('click', () => {
 function clearAddForm() {
   document.getElementById('add-fio').value = '';
   document.getElementById('add-card').value = '';
+  document.getElementById('add-bday').value = '';
   document.getElementById('add-phone').value = '';
   document.getElementById('add-notes').value = '';
   document.getElementById('add-type').selectedIndex = 0;
