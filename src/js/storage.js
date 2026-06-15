@@ -24,6 +24,7 @@ function getOperationList() {
 }
 
 function saveOperationList(list) {
+  console.log('saveOperationList вызван, сохраняем список:', list);
   localStorage.setItem(LIST_KEY, JSON.stringify(list));
 }
 
