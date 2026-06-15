@@ -43,8 +43,8 @@ function renderTable() {
         <td><select class="ring-select" data-index="${index}">${ringSelect}</select></td>
         <td><select class="flap-select" data-index="${index}">${flapSelect}</select></td>
         <td>${escapeHtml(item.phone || '—')}</td>
-        <td>${escapeHtml(item.type || '—')}</td>
         <td>${escapeHtml(item.notes || '—')}</td>
+        <td>${escapeHtml(item.type || '—')}</td>
       `;
     } else {
       row.classList.add('pause-row');
