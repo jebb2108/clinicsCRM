@@ -30,14 +30,13 @@ td input:focus {
 }
 
 /* ширина колонок (8 колонок для хирурга) */
-th:first-child, td:first-child { width: 80px; }
+th:first-child, td:first-child { width: 14%; }
 th:nth-child(2), td:nth-child(2) { width: 20%; }
 th:nth-child(3), td:nth-child(3) { width: 10%; }
 th:nth-child(4), td:nth-child(4) { width: 8%; }
 th:nth-child(5), td:nth-child(5) { width: 8%; }
 th:nth-child(6), td:nth-child(6) { width: 10%; }
-th:nth-child(7), td:nth-child(7) { width: 10%; }
-th:last-child, td:last-child { width: 14%; }
+th:last-child, td:last-child { width: 24%; }
 
 tr.pause-row td {
   background: rgba(255, 255, 255, 0.08);
