@@ -35,11 +35,11 @@
   <h3>Новая запись</h3>
   <div class="form-row">
     <label>ФИО: <input type="text" id="add-fio" required></label>
+  </div>
+  <div class="form-row">
     <label>№ медкарты: <input type="text" id="add-card" required></label>
     <label>Телефон: <input type="text" id="add-phone" required></label>
     <label>Дата рождения: <input type="datetime" id="add-bday" required></label>
-  </div>
-  <div class="form-row">
     <label>Тип операции:
       <select id="add-type">
         <option value="ФЕМТО">ФЕМТО</option>
@@ -48,9 +48,6 @@
         <option value="ПТК">ПТК</option>
       </select>
     </label>
-  </div>
-  <div class="form-row">
-    <label>Особенности: <textarea id="add-notes" rows="2"></textarea></label>
   </div>
   <div class="form-actions">
     <button id="save-patient" class="btn-primary">Сохранить</button>
@@ -68,7 +65,6 @@
         <th>№ карты</th>
         <th>Дата рождения</th>
         <th>Телефон</th>
-        <th>Особенности</th>
         <th>Операция</th>
         <th>Действия</th>
       </tr>

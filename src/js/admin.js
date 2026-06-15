@@ -26,7 +26,6 @@ function renderTable() {
         <td>${escapeHtml(item.card || '')}</td>
         <td>${escapeHtml(item.bday) || ''}</td>
         <td>${escapeHtml(item.phone || '')}</td>
-        <td>${escapeHtml(item.notes || '—')}</td>
         <td>${escapeHtml(item.type || '')}</td>
         <td class="delete-cell"><button class="btn-delete" data-index="${index}">Удалить</button></td>
       `;
@@ -144,7 +143,6 @@ document.getElementById('save-patient').addEventListener('click', () => {
 
   const patient = {
     fio, card, bday, phone, type, duration,
-    notes: document.getElementById('add-notes').value.trim() || '—',
     ring: document.getElementById('add-ring')?.value.trim() || '—',
     flap: document.getElementById('add-flap')?.value.trim() || '—'
   };
@@ -159,7 +157,6 @@ function clearAddForm() {
   document.getElementById('add-card').value = '';
   document.getElementById('add-bday').value = '';
   document.getElementById('add-phone').value = '';
-  document.getElementById('add-notes').value = '';
   document.getElementById('add-type').selectedIndex = 0;
 }
 
@@ -203,7 +200,7 @@ document.getElementById('download-word').addEventListener('click', () => {
         <td>${escapeHtml(item.fio)}</td>
         <td>${escapeHtml(item.card)}</td>
         <td>${escapeHtml(item.phone)}</td>
-        <td>${escapeHtml(item.type + ', ' + item.notes)}</td>
+        <td>${escapeHtml(item.type)}</td>
       </tr>`;
     } else {
       html += `<tr style="background-color:#f1f3f5;">
