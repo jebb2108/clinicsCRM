@@ -183,7 +183,6 @@ document.getElementById('start-time').addEventListener('change', function () {
 
 
 // ========== Скачивание Word ==========
-
 function importPatientsFromExcel(event) {
   const file = event.target.files[0];
 
@@ -193,23 +192,21 @@ function importPatientsFromExcel(event) {
 
   reader.onload = function (e) {
     try {
-      const workbook = XLSX.read(e.target.result, {
-        type: 'array'
-      });
+
+      const patients = [];
+
+      const workbook = XLSX.read(
+        e.target.result, {type: 'array'}
+      );
 
       const sheet = workbook.Sheets[workbook.SheetNames[0]];
 
-      const rows = XLSX.utils.sheet_to_json(sheet, {
-        header: 1,
-        defval: ''
+      const rows = XLSX.utils.sheet_to_json(
+        sheet, { header: 1, defval: ''
       });
 
-      const OPERATION_TYPES = {
-        'ФЕМТО': 15,
-        'ФРК': 10
-      };
+      const OPERATION_TYPES = { 'ФЕМТО': 15, 'ФРК': 10, 'ПТК': 15 };
 
-      const patients = [];
 
       rows.forEach(row => {
 
@@ -240,26 +237,15 @@ function importPatientsFromExcel(event) {
         // Описание операции
         const description = String(row[3] || '').trim();
 
-        const type =
-          description
-            .split(/\s+/)[0]
-            ?.toUpperCase() || 'ФРК';
+        const type = description.split(/\s+/)[0]?.toUpperCase().replace(/,.*/, '') || 'ФЕМТО';
 
-        const duration = OPERATION_TYPES[type] || 10;
+        const duration = OPERATION_TYPES[type] || 15;
 
         const phone = String(row[4] || '').trim();
         const card = String(row[5] || '').trim();
 
-        patients.push({
-          fio,
-          card,
-          bday,
-          phone,
-          type,
-          duration,
-          ring: '—',
-          flap: '—'
-        });
+        patients.push({ fio, card, bday, phone, type, duration, ring: '—', flap: '—' });
+
       });
 
       if (!patients.length) {
@@ -270,8 +256,6 @@ function importPatientsFromExcel(event) {
       patients.forEach(patient => addPatient(patient));
 
       renderTable();
-
-      alert(`Импортировано пациентов: ${patients.length}`);
 
       console.log('Импортированные пациенты:', patients);
 

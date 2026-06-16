@@ -60,6 +60,10 @@
   cursor: pointer;
   font-weight: 500;
   transition: background 0.2s, border-color 0.2s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-add:hover,
@@ -187,12 +191,42 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
+/* ========== Прокручиваемая область таблицы ========== */
+.patients-table-wrap {
+  max-height: calc(100vh - 260px);
+  overflow-y: auto;
+  overflow-x: auto;
+  margin-top: 1rem;
+  padding-right: 4px;
+  border-radius: 8px;
+}
+
+/* Скроллбар */
+.patients-table-wrap::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.patients-table-wrap::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+}
+
+.patients-table-wrap::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+.patients-table-wrap::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
 /* ========== Таблица ========== */
 #patients-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 10px;
-  margin-top: 1rem;
+  margin-top: 0;
 }
 
 #patients-table thead th {
@@ -204,6 +238,11 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(18, 20, 26, 0.98);
+  backdrop-filter: blur(10px);
 }
 
 #patients-table thead th:first-child {
@@ -290,5 +329,30 @@ th:nth-child(3), td:nth-child(3) { width: 28%; }
 th:nth-child(4), td:nth-child(4) { width: 10%; }
 th:nth-child(5), td:nth-child(5) { width: 10%; }
 th:nth-child(6), td:nth-child(6) { width: 15%; }
-th:nth-child(8), td:nth-child(8) { width: 8%; }
+th:nth-child(7), td:nth-child(7) { width: 10%; }
 th:last-child, td:last-child { width: 14%; }
+
+/* ========== Адаптивность ========== */
+@media (max-width: 1200px) {
+  .patients-table-wrap {
+    max-height: calc(100vh - 300px);
+  }
+}
+
+@media (max-width: 768px) {
+  .toolbar {
+    align-items: flex-start;
+  }
+
+  .actions {
+    width: 100%;
+  }
+
+  .patients-table-wrap {
+    max-height: calc(100vh - 340px);
+  }
+
+  #patients-table {
+    min-width: 900px;
+  }
+}

@@ -1,5 +1,12 @@
 /* engineer.css – панель инженера, единый стиль */
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 /* Кнопка сохранения */
 .btn-save {
   margin-top: 1.5rem;

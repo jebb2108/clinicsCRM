@@ -6,6 +6,11 @@ const tbody = document.getElementById('creds-body');
 const savedNotification = document.getElementById('saved-notification');
 const saveBtn = document.getElementById('save-creds');
 
+// Заполнение user-panel
+const userName = sessionStorage.getItem('userName') || 'Инженер';
+const today = new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+
+
 // Показать уведомление "Сохранено"
 function showSaved() {
   if (!savedNotification) return;
@@ -51,16 +56,82 @@ saveBtn.addEventListener('click', () => {
   }
 });
 
+function normalizePatientType(type) {
+  switch (type) {
+    case 'ФЕМТО':
+      return 'femto';
+
+    case 'ФРК':
+      return 'frk';
+
+    case 'ПТК':
+      return 'ptk';
+
+    case 'ДОКОРРЕКЦИЯ':
+      return 'correction';
+
+    default:
+      return 'femto';
+  }
+}
+
+function buildPatientsExport() {
+  const operationList = getOperationList();
+
+  return operationList
+    .filter(patient => patient.type !== 'pause')
+    .map((patient, index) => ({
+      id: index + 1,
+      type: normalizePatientType(patient.type),
+      patientName: patient.fio,
+      eye: 'OU',
+      birthDate: patient.bday,
+      phone: patient.phone,
+      flapThickness:
+        patient.flap && patient.flap !== '—'
+          ? Number(patient.flap)
+          : 100,
+      ringDiameter:
+        patient.ring && patient.ring !== '—'
+          ? Number(patient.ring)
+          : 8.5,
+      specialNotes: ''
+    }));
+}
+
+function downloadPatientsFile() {
+  const patients = buildPatientsExport();
+
+  if (!patients.length) {
+    alert('Пациенты не найдены.');
+    return;
+  }
+
+  const fileContent = `const patients = ${JSON.stringify(patients, null, 2)};\n`;
+  const blob = new Blob([fileContent], { type: 'text/javascript;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  const now = new Date();
+  const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  a.href = url;
+  a.download = `patients_${dateStr}.js`;
+
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  URL.revokeObjectURL(url);
+}
+
 // Кнопка выхода
 document.getElementById('logout-btn').addEventListener('click', () => {
   sessionStorage.clear();
   window.location.href = '/index.html';
 });
 
-// Заполнение user-panel
-const userName = sessionStorage.getItem('userName') || 'Инженер';
-const today = new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
-
+// кнопки загрузки JSON файла для мобильного приложения
+document.getElementById('download-patients').addEventListener('click', downloadPatientsFile);
 document.getElementById('user-name-display').textContent = userName;
 document.getElementById('current-date').textContent = today;
 
