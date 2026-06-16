@@ -29,7 +29,12 @@
     <div class="toolbar">
       <h2>Список операций</h2>
       <div class="actions">
-        <button id="toggle-add-form" class="btn-add">Добавить запись</button>
+        <div class="action-with-toggle">
+          <button id="toggle-add-form" class="btn-add">Добавить запись</button>
+          <button id="toggle-patient-list" class="list-toggle-icon hidden" type="button" aria-expanded="false" aria-label="Развернуть список пациентов" title="Развернуть список пациентов">
+            <span class="toggle-arrow" aria-hidden="true"></span>
+          </button>
+        </div>
         <button id="add-pause-btn" class="pause-btn">Добавить паузу</button>
         <input
           type="file"
@@ -90,11 +95,7 @@
         <tbody id="table-body"></tbody>
       </table>
     </div>
-    <div id="admin-list-controls" class="list-controls hidden">
-      <button id="toggle-patient-list" class="icon-toggle-btn pill-toggle-btn" type="button" aria-expanded="false" title="Развернуть список">
-        <span id="toggle-patient-list-label">Развернуть список</span>
-      </button>
-    </div>
+    <div id="admin-list-hint" class="list-overflow-hint hidden">Показаны не все пациенты. Прокрутите список или разверните его, чтобы увидеть остальных.</div>
   </section>
 
   <section class="dashboard-view hidden" data-view="profile">

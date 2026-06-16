@@ -5,9 +5,8 @@ if (sessionStorage.getItem('role') !== 'surgeon') {
 const tableBody = document.getElementById('table-body');
 const savedNotification = document.getElementById('saved-notification');
 const tableWrap = document.querySelector('.surgeon-table-wrap');
-const listControls = document.getElementById('surgeon-list-controls');
 const togglePatientListBtn = document.getElementById('toggle-patient-list');
-const togglePatientListLabel = document.getElementById('toggle-patient-list-label');
+const surgeonListHint = document.getElementById('surgeon-list-hint');
 const approveListBtn = document.getElementById('approve-list-btn');
 const approvalModal = document.getElementById('approval-modal');
 const operationDateInput = document.getElementById('operation-date');
@@ -118,9 +117,27 @@ function shouldAutoExpandList() {
   return Boolean(getSurgeonProfile().autoExpandLongList);
 }
 
+function updateCollapsedListHeight() {
+  const rows = Array.from(tableBody.querySelectorAll('tr'));
+
+  if (rows.length < 8 || tableWrap.classList.contains('hidden')) {
+    tableWrap.style.removeProperty('--collapsed-list-height');
+    return;
+  }
+
+  const targetRow = rows[7];
+  const wrapRect = tableWrap.getBoundingClientRect();
+  const rowRect = targetRow.getBoundingClientRect();
+  const computedStyle = window.getComputedStyle(tableWrap);
+  const paddingBottom = parseFloat(computedStyle.paddingBottom) || 0;
+  const collapsedHeight = Math.ceil(rowRect.bottom - wrapRect.top + paddingBottom);
+
+  tableWrap.style.setProperty('--collapsed-list-height', `${collapsedHeight}px`);
+}
+
 function updatePatientListControls(totalRows) {
   const hasPatients = totalRows > 0;
-  const canCollapse = totalRows > 5;
+  const canCollapse = totalRows > 8;
 
   if (canCollapse && isPatientListExpanded === null) {
     isPatientListExpanded = shouldAutoExpandList();
@@ -132,21 +149,22 @@ function updatePatientListControls(totalRows) {
 
   currentEmptyState.classList.toggle('hidden', hasPatients);
   tableWrap.classList.toggle('hidden', !hasPatients);
-  listControls.classList.toggle('hidden', !hasPatients);
   approveListBtn.classList.toggle('hidden', !hasPatients);
   tableWrap.classList.toggle('is-collapsed', canCollapse && !isPatientListExpanded);
   togglePatientListBtn.classList.toggle('hidden', !canCollapse);
+  surgeonListHint.classList.toggle('hidden', !canCollapse || isPatientListExpanded || !hasPatients);
 
   if (!canCollapse) {
     togglePatientListBtn.setAttribute('aria-expanded', 'false');
-    togglePatientListBtn.title = 'Развернуть список';
-    togglePatientListLabel.textContent = 'Развернуть список';
+    togglePatientListBtn.setAttribute('aria-label', 'Развернуть список пациентов');
+    togglePatientListBtn.title = 'Развернуть список пациентов';
     return;
   }
 
+  updateCollapsedListHeight();
   togglePatientListBtn.setAttribute('aria-expanded', String(isPatientListExpanded));
-  togglePatientListBtn.title = isPatientListExpanded ? 'Свернуть список' : 'Развернуть список';
-  togglePatientListLabel.textContent = isPatientListExpanded ? 'Свернуть список' : 'Развернуть список';
+  togglePatientListBtn.setAttribute('aria-label', isPatientListExpanded ? 'Свернуть список пациентов' : 'Развернуть список пациентов');
+  togglePatientListBtn.title = isPatientListExpanded ? 'Свернуть список пациентов' : 'Развернуть список пациентов';
 }
 
 function updateApprovalStatus() {
@@ -530,6 +548,12 @@ function saveProfile(event) {
 togglePatientListBtn.addEventListener('click', () => {
   isPatientListExpanded = !Boolean(isPatientListExpanded);
   updatePatientListControls(getOperationList().length);
+});
+
+window.addEventListener('resize', () => {
+  if (getOperationList().length > 8) {
+    updateCollapsedListHeight();
+  }
 });
 
 approveListBtn.addEventListener('click', handleApproveClick);

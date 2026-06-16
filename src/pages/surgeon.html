@@ -38,6 +38,9 @@
         </div>
         <div id="surgeon-approve-controls" class="list-controls surgeon-approve-controls">
           <button id="approve-list-btn" class="approve-list-btn" type="button">Утвердить список</button>
+          <button id="toggle-patient-list" class="list-toggle-icon hidden" type="button" aria-expanded="false" aria-label="Развернуть список пациентов" title="Развернуть список пациентов">
+            <span class="toggle-arrow" aria-hidden="true"></span>
+          </button>
         </div>
       </div>
       <div id="current-empty-state" class="empty-state hidden">
@@ -60,11 +63,7 @@
           <tbody id="table-body"></tbody>
         </table>
       </div>
-      <div id="surgeon-list-controls" class="list-controls surgeon-list-controls">
-        <button id="toggle-patient-list" class="icon-toggle-btn pill-toggle-btn hidden" type="button" aria-expanded="false" title="Развернуть список">
-          <span id="toggle-patient-list-label">Развернуть список</span>
-        </button>
-      </div>
+      <div id="surgeon-list-hint" class="list-overflow-hint hidden">Показаны не все пациенты. Прокрутите список или разверните его, чтобы увидеть остальных.</div>
       <div id="approval-status" class="approval-status hidden"></div>
     </section>
 

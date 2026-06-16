@@ -63,7 +63,7 @@
 }
 
 .surgeon-table-wrap.is-collapsed {
-  max-height: min(390px, calc(100vh - 320px));
+  max-height: var(--collapsed-list-height, min(560px, calc(100vh - 280px)));
   overflow-y: auto;
   overflow-x: auto;
 }
@@ -73,11 +73,6 @@
   margin-top: 0;
   margin-left: auto;
   flex-wrap: wrap;
-}
-
-.surgeon-list-controls {
-  justify-content: flex-start;
-  margin-top: -1px;
 }
 
 .approve-list-btn {
@@ -90,25 +85,6 @@
 .approve-list-btn:hover {
   background: rgba(74, 158, 255, 0.22);
   border-color: rgba(74, 158, 255, 0.7);
-}
-
-.pill-toggle-btn {
-  min-width: 260px;
-  height: auto;
-  padding: 0.42rem 0.95rem;
-  border-top: none;
-  border-radius: 0 0 14px 14px;
-  justify-content: center;
-  background: #0b1a2e;
-  color: rgba(255, 255, 255, 0.76);
-  transform: translateY(-1px);
-  font-size: 0.78rem;
-  line-height: 1.1;
-  font-weight: 500;
-}
-
-#toggle-patient-list-label {
-  display: inline-block;
 }
 
 .approval-status {
@@ -554,11 +530,10 @@ tr.pause-row:hover td {
   }
 
   .surgeon-table-wrap.is-collapsed {
-    max-height: min(340px, calc(100vh - 360px));
+    max-height: var(--collapsed-list-height, min(520px, calc(100vh - 320px)));
   }
 
   .surgeon-approve-controls,
-  .surgeon-list-controls,
   .modal-actions {
     justify-content: stretch;
     flex-direction: column;
@@ -566,7 +541,7 @@ tr.pause-row:hover td {
     width: 100%;
   }
 
-  .pill-toggle-btn,
+  .list-toggle-icon,
   .approve-list-btn,
   .archive-download-btn {
     width: 100%;

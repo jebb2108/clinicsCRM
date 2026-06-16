@@ -5,9 +5,8 @@ if (sessionStorage.getItem('role') !== 'admin') {
 const tableBody = document.getElementById('table-body');
 const addForm = document.getElementById('add-form');
 const tableWrap = document.querySelector('.patients-table-wrap');
-const listControls = document.getElementById('admin-list-controls');
 const togglePatientListBtn = document.getElementById('toggle-patient-list');
-const togglePatientListLabel = document.getElementById('toggle-patient-list-label');
+const adminListHint = document.getElementById('admin-list-hint');
 const adminEmptyState = document.getElementById('admin-empty-state');
 const savedNotification = document.getElementById('saved-notification');
 const navButtons = Array.from(document.querySelectorAll('.role-nav-btn'));
@@ -216,28 +215,46 @@ function renderProfileForm() {
   profileSignatureInput.value = profile.signature || '';
 }
 
+function updateCollapsedListHeight() {
+  const rows = Array.from(tableBody.querySelectorAll('tr'));
+
+  if (rows.length < 8 || tableWrap.classList.contains('hidden')) {
+    tableWrap.style.removeProperty('--collapsed-list-height');
+    return;
+  }
+
+  const targetRow = rows[7];
+  const wrapRect = tableWrap.getBoundingClientRect();
+  const rowRect = targetRow.getBoundingClientRect();
+  const computedStyle = window.getComputedStyle(tableWrap);
+  const paddingBottom = parseFloat(computedStyle.paddingBottom) || 0;
+  const collapsedHeight = Math.ceil(rowRect.bottom - wrapRect.top + paddingBottom);
+
+  tableWrap.style.setProperty('--collapsed-list-height', `${collapsedHeight}px`);
+}
+
 function updatePatientListControls(totalRows) {
   const hasPatients = totalRows > 0;
-  const canCollapse = totalRows > 5;
+  const canCollapse = totalRows > 8;
 
   adminEmptyState.classList.toggle('hidden', hasPatients);
   tableWrap.classList.toggle('hidden', !hasPatients);
   tableWrap.classList.toggle('is-collapsed', canCollapse && !isPatientListExpanded);
-  listControls.classList.toggle('hidden', !canCollapse);
+  togglePatientListBtn.classList.toggle('hidden', !canCollapse);
+  adminListHint.classList.toggle('hidden', !canCollapse || isPatientListExpanded || !hasPatients);
 
   if (!canCollapse) {
     isPatientListExpanded = false;
     togglePatientListBtn.setAttribute('aria-expanded', 'false');
-    togglePatientListBtn.title = 'Развернуть список';
-    if (togglePatientListLabel) togglePatientListLabel.textContent = 'Развернуть список';
+    togglePatientListBtn.setAttribute('aria-label', 'Развернуть список пациентов');
+    togglePatientListBtn.title = 'Развернуть список пациентов';
     return;
   }
 
+  updateCollapsedListHeight();
   togglePatientListBtn.setAttribute('aria-expanded', String(isPatientListExpanded));
-  togglePatientListBtn.title = isPatientListExpanded ? 'Свернуть список' : 'Развернуть список';
-  if (togglePatientListLabel) {
-    togglePatientListLabel.textContent = isPatientListExpanded ? 'Свернуть список' : 'Развернуть список';
-  }
+  togglePatientListBtn.setAttribute('aria-label', isPatientListExpanded ? 'Свернуть список пациентов' : 'Развернуть список пациентов');
+  togglePatientListBtn.title = isPatientListExpanded ? 'Свернуть список пациентов' : 'Развернуть список пациентов';
 }
 
 // ========== Рендеринг таблицы ==========
@@ -300,6 +317,12 @@ function renderTable() {
 togglePatientListBtn.addEventListener('click', () => {
   isPatientListExpanded = !isPatientListExpanded;
   updatePatientListControls(getOperationList().length);
+});
+
+window.addEventListener('resize', () => {
+  if (getOperationList().length > 8) {
+    updateCollapsedListHeight();
+  }
 });
 
 navButtons.forEach(button => {
