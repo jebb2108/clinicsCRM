@@ -101,8 +101,8 @@ body {
 .site-footer {
   width: 100%;
   max-width: 1400px;
-  margin: 1.5rem auto 0;
-  padding: 0.9rem 0;
+  margin: auto auto 0;
+  padding: 1.5rem 0 0.9rem;
   color: rgba(255, 255, 255, 0.48);
   font-size: 0.82rem;
   text-align: center;

@@ -7,10 +7,9 @@
 body {
   font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, sans-serif;
   background: #0b1a2e;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  justify-items: center;
   min-height: 100vh;
   color: #e0e5ec;
   padding: 2rem;
@@ -19,6 +18,7 @@ body {
 .auth-container {
   width: 100%;
   max-width: 420px;
+  align-self: center;
   border-radius: 8px;
   box-shadow: 
     0 8px 24px rgba(0, 0, 0, 0.4),
@@ -29,6 +29,7 @@ body {
 }
 
 .site-footer {
+  width: 100%;
   margin-top: 1.5rem;
   color: rgba(255, 255, 255, 0.48);
   font-size: 0.82rem;

@@ -25,6 +25,95 @@ const addPhoneInput = document.getElementById('add-phone');
 let draggedRowIndex = null;
 let isPatientListExpanded = false;
 
+function extractPatientPhoneDigits(value) {
+  return getPatientPhoneState(value).localDigits;
+}
+
+function getPatientPhoneState(value) {
+  const rawValue = String(value || '').trim();
+  const digits = rawValue.replace(/\D/g, '');
+  const hasExplicitPlus = rawValue.startsWith('+');
+
+  if (!digits) {
+    return {
+      countryCode: '7',
+      localDigits: '',
+      hasDigits: false,
+      hasExplicitPlus
+    };
+  }
+
+  if (hasExplicitPlus) {
+    return {
+      countryCode: digits[0],
+      localDigits: digits.slice(1, 11),
+      hasDigits: true,
+      hasExplicitPlus
+    };
+  }
+
+  if (digits.startsWith('9')) {
+    return {
+      countryCode: '7',
+      localDigits: digits.slice(0, 10),
+      hasDigits: true,
+      hasExplicitPlus: false
+    };
+  }
+
+  if (digits.startsWith('7') || digits.startsWith('8')) {
+    return {
+      countryCode: '7',
+      localDigits: digits.slice(1, 11),
+      hasDigits: true,
+      hasExplicitPlus: false
+    };
+  }
+
+  return {
+    countryCode: digits[0],
+    localDigits: digits.slice(1, 11),
+    hasDigits: true,
+    hasExplicitPlus: false
+  };
+}
+
+function buildPatientPhoneMask(value) {
+  const phoneState = getPatientPhoneState(value);
+  const digits = phoneState.localDigits.split('');
+  const masked = `+${phoneState.countryCode} (___) ___-__-__`.split('');
+  const slots = [4, 5, 6, 9, 10, 11, 13, 14, 16, 17];
+
+  slots.forEach((slotIndex, digitIndex) => {
+    if (digits[digitIndex]) {
+      masked[slotIndex] = digits[digitIndex];
+    }
+  });
+
+  return masked.join('');
+}
+
+function syncPatientPhoneMask() {
+  const rawValue = addPhoneInput.value.trim();
+  const phoneState = getPatientPhoneState(rawValue);
+
+  if (!rawValue) {
+    addPhoneInput.value = '';
+    return;
+  }
+
+  if (!phoneState.hasDigits && phoneState.hasExplicitPlus) {
+    addPhoneInput.value = '+';
+    return;
+  }
+
+  addPhoneInput.value = phoneState.hasDigits ? buildPatientPhoneMask(rawValue) : '';
+}
+
+function isPatientPhoneComplete(value) {
+  return extractPatientPhoneDigits(value).length === 10;
+}
+
 function showSaved() {
   if (!savedNotification) return;
 
@@ -254,6 +343,10 @@ document.getElementById('save-patient').addEventListener('click', () => {
     alert('Поле "Телефон" обязательно для заполнения.');
     return;
   }
+  if (!isPatientPhoneComplete(addPhoneInput.value)) {
+    alert('Введите телефон полностью в формате +7 (___) ___-__-__.');
+    return;
+  }
 
   addPhoneInput.value = phone;
 
@@ -283,8 +376,24 @@ function clearAddForm() {
   document.getElementById('add-type').selectedIndex = 0;
 }
 
+addPhoneInput.addEventListener('input', () => {
+  syncPatientPhoneMask();
+});
+
 addPhoneInput.addEventListener('blur', () => {
-  addPhoneInput.value = formatPhoneNumber(addPhoneInput.value);
+  const phoneState = getPatientPhoneState(addPhoneInput.value);
+
+  if (!phoneState.localDigits.length) {
+    addPhoneInput.value = '';
+    return;
+  }
+
+  if (isPatientPhoneComplete(addPhoneInput.value)) {
+    addPhoneInput.value = formatPhoneNumber(addPhoneInput.value);
+    return;
+  }
+
+  addPhoneInput.value = buildPatientPhoneMask(addPhoneInput.value);
 });
 
 // ========== Добавление паузы ==========
