@@ -79,10 +79,9 @@ function getPatientPhoneState(value) {
   };
 }
 
-function buildPatientPhoneMask(value) {
-  const phoneState = getPatientPhoneState(value);
-  const digits = phoneState.localDigits.split('');
-  const masked = `+${phoneState.countryCode} (___) ___-__-__`.split('');
+function buildPatientPhoneMaskFromState(countryCode, localDigits) {
+  const digits = String(localDigits || '').split('');
+  const masked = `+${countryCode} (___) ___-__-__`.split('');
 
   PATIENT_PHONE_MASK_SLOTS.forEach((slotIndex, digitIndex) => {
     if (digits[digitIndex]) {
@@ -91,6 +90,11 @@ function buildPatientPhoneMask(value) {
   });
 
   return masked.join('');
+}
+
+function buildPatientPhoneMask(value) {
+  const phoneState = getPatientPhoneState(value);
+  return buildPatientPhoneMaskFromState(phoneState.countryCode, phoneState.localDigits);
 }
 
 function countPatientLocalDigitsBeforeCaret(value, caretPosition) {
@@ -127,6 +131,25 @@ function getPatientPhoneCaretPosition(maskedValue, localDigitCount) {
   }
 
   return PATIENT_PHONE_MASK_SLOTS[localDigitCount];
+}
+
+function replacePatientPhoneDigits(countryCode, localDigits, caretLocalIndex) {
+  const nextDigits = String(localDigits || '').slice(0, PATIENT_PHONE_MASK_SLOTS.length);
+
+  if (!nextDigits) {
+    addPhoneInput.value = '';
+    addPhoneInput.setSelectionRange(0, 0);
+    return;
+  }
+
+  addPhoneInput.value = buildPatientPhoneMaskFromState(countryCode, nextDigits);
+
+  const nextCaretPosition = getPatientPhoneCaretPosition(
+    addPhoneInput.value,
+    Math.min(caretLocalIndex, nextDigits.length)
+  );
+
+  addPhoneInput.setSelectionRange(nextCaretPosition, nextCaretPosition);
 }
 
 function syncPatientPhoneMask() {
@@ -390,7 +413,7 @@ document.getElementById('save-patient').addEventListener('click', () => {
     return;
   }
   if (!isPatientPhoneComplete(addPhoneInput.value)) {
-    alert('Введите телефон полностью в формате +7 (___) ___-__-__.');
+    alert('Введите телефон полностью в формате +(код) (___) ___-__-__.');
     return;
   }
 
@@ -424,6 +447,48 @@ function clearAddForm() {
 
 addPhoneInput.addEventListener('input', () => {
   syncPatientPhoneMask();
+});
+
+addPhoneInput.addEventListener('keydown', event => {
+  if (event.key !== 'Backspace' && event.key !== 'Delete') {
+    return;
+  }
+
+  if (!addPhoneInput.value) {
+    return;
+  }
+
+  const selectionStart = addPhoneInput.selectionStart ?? 0;
+  const selectionEnd = addPhoneInput.selectionEnd ?? selectionStart;
+  const phoneState = getPatientPhoneState(addPhoneInput.value);
+  const localDigits = phoneState.localDigits.split('');
+
+  if (!localDigits.length) {
+    event.preventDefault();
+    addPhoneInput.value = '';
+    return;
+  }
+
+  let removeStart = countPatientLocalDigitsBeforeCaret(addPhoneInput.value, selectionStart);
+  let removeEnd = countPatientLocalDigitsBeforeCaret(addPhoneInput.value, selectionEnd);
+
+  if (selectionStart === selectionEnd) {
+    if (event.key === 'Backspace') {
+      removeStart = Math.max(removeStart - 1, 0);
+      removeEnd = Math.max(removeEnd, removeStart);
+    } else {
+      removeEnd = Math.min(removeStart + 1, localDigits.length);
+    }
+  }
+
+  if (removeStart === removeEnd) {
+    event.preventDefault();
+    return;
+  }
+
+  event.preventDefault();
+  localDigits.splice(removeStart, removeEnd - removeStart);
+  replacePatientPhoneDigits(phoneState.countryCode, localDigits.join(''), removeStart);
 });
 
 addPhoneInput.addEventListener('blur', () => {
