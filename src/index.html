@@ -4,11 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Вход в систему</title>
-  <link rel="stylesheet" href="/css/auth.css">
+  <link rel="stylesheet" href="/src/css/auth.css">
 </head>
 <body>
-  <div class="auth-container" style="background-image: url('/images/logo.png');">
-    <!-- Логотип как фон, содержимое будет поверх него -->
+  <div class="auth-container">
+    <!-- Квадратное лого над полями -->
+    <div class="logo">
+      <img src="/src/images/logo.png" alt="Логотип">
+    </div>
+    <!-- Форма -->
     <div class="auth-content">
       <form id="login-form">
         <div class="form-group">
@@ -26,12 +30,12 @@
         <div class="form-group">
           <input type="password" id="password-input" placeholder="Пароль" required>
         </div>
-        <button type="submit">Войти</button>
+        <button id="login-btn" type="submit">Войти</button>
         <p id="error-msg" class="error-message"></p>
       </form>
     </div>
   </div>
-  <script src="/js/storage.js"></script>
-  <script src="/js/auth.js"></script>
+  <script src="/src/js/storage.js"></script>
+  <script src="/src/js/auth.js"></script>
 </body>
 </html>

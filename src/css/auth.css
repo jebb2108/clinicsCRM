@@ -1,3 +1,4 @@
+/* auth.css */
 * {
   margin: 0;
   padding: 0;
@@ -6,7 +7,7 @@
 
 body {
   font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, sans-serif;
-  background: #0b1a2e;
+  background: #0b1a2e;                /* тёмный фон, будет виден сквозь полупрозрачное окно */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,58 +20,68 @@ body {
   max-width: 420px;
   border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-  overflow: hidden;
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-color: #0b1a2e;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  /* фон окна: #fefefe с прозрачностью, эффект матового стекла */
+  background: #fefefe;
+  backdrop-filter: blur(12px);         /* размытие фона за окном */
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 2.5rem 2.5rem 2rem;        /* отступы без изменений */
 }
 
-/* Контентная часть */
+/* === ЛОГОТИП === */
+.logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;               /* отступ до формы сохранён */
+}
+
+.logo img {
+  width: 240px;                      /* увеличенный квадрат */
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  display: block;
+  }
+
+/* === ФОРМА === */
 .auth-content {
-  padding: 2.5rem;
-  padding-top: 20rem;
-  background: rgba(11, 26, 46, 0.85);
-  backdrop-filter: blur(4px);
-  border-radius: 8px;
+  background: none;
 }
 
 .form-group {
   margin-bottom: 1.2rem;
 }
 
-/* Поля ввода и селект */
+/* Поля ввода и селект — теперь контрастные на белом фоне */
 .form-group select,
 .form-group input {
   width: 100%;
   padding: 0.7rem 0.9rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   font-size: 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
+  background: rgba(0, 0, 0, 0.06);    /* едва заметный серый фон */
+  color: #1a1a1a;                     /* тёмный текст */
   transition: border 0.2s, box-shadow 0.2s;
 }
 
 .form-group input::placeholder {
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .form-group select:focus,
 .form-group input:focus {
   outline: none;
-  border-color: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+  border-color: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
-/* Кастомная стрелка для выпадающего списка */
+/* Кастомная стрелка — теперь тёмная */
 .form-group select {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   padding-right: 2.5rem;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333333'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-position: right 0.8rem center;
   background-size: 1.2rem;
@@ -82,18 +93,31 @@ body {
 }
 
 .form-group select option {
-  background: #1e2a3a;
-  color: #ffffff;
+  background: #f4f4f4;
+  color: #1a1a1a;
 }
 
-/* ---------- Кнопка "Войти" ---------- */
+#login-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background:  #001f41;
+  border: 1px solid rgba(226, 187, 187, 0.3);
+  border-radius: 4px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+/* Кнопка "Войти" */
 button[type="submit"] {
   width: 100%;
   padding: 0.75rem;
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 4px;
-  color: rgba(255, 255, 255, 0.85);
+  color: #1a1a1a;
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
@@ -102,27 +126,30 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.5);
-  color: #ffffff;
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.5);
+  color: #0b1a2e;
 }
 
 .error-message {
-  color: #f87171;
+  color: #c9302c;
   text-align: center;
   margin-top: 0.5rem;
   font-size: 0.85rem;
 }
 
-/* Адаптивность для маленьких экранов */
+/* Адаптивность */
 @media (max-width: 480px) {
-  .auth-content {
-    padding-top: 15rem;
-    padding: 15rem 1.5rem 1.5rem;
-  }
-  
   .auth-container {
-    max-width: 100%;
+    padding: 2rem 1.5rem 1.5rem;
     margin: 0 1rem;
+  }
+
+  .logo img {
+    width: 90px;                     /* немного меньше на телефонах */
+  }
+
+  .logo {
+    margin-bottom: 1.5rem;
   }
 }
