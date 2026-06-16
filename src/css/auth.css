@@ -15,37 +15,32 @@ body {
 }
 
 .auth-container {
-  background: #0b1a2e;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 2.5rem;
-  border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   width: 100%;
   max-width: 420px;
-}
-
-/* ---------- Логотип ---------- */
-.logo {
-  background-color: #fdfdfd;
   border-radius: 8px;
-  padding: 0.8rem 1.2rem;
-  text-align: center;
-  margin-bottom: 2.2rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #0b1a2e;
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-.logo img {
-  display: block; 
-  max-width: 100%;
-  height: auto;
-  margin: 0 auto;
+/* Контентная часть */
+.auth-content {
+  padding: 2.5rem;
+  padding-top: 20rem;
+  background: rgba(11, 26, 46, 0.85);
+  backdrop-filter: blur(4px);
+  border-radius: 8px;
 }
 
-/* ---------- Поля ввода и селект ---------- */
 .form-group {
   margin-bottom: 1.2rem;
 }
 
+/* Поля ввода и селект */
 .form-group select,
 .form-group input {
   width: 100%;
@@ -54,7 +49,7 @@ body {
   border-radius: 4px;
   font-size: 1rem;
   background: rgba(255, 255, 255, 0.05);
-  color: #fdfdfd;
+  color: #ffffff;
   transition: border 0.2s, box-shadow 0.2s;
 }
 
@@ -117,4 +112,17 @@ button[type="submit"]:hover {
   text-align: center;
   margin-top: 0.5rem;
   font-size: 0.85rem;
+}
+
+/* Адаптивность для маленьких экранов */
+@media (max-width: 480px) {
+  .auth-content {
+    padding-top: 15rem;
+    padding: 15rem 1.5rem 1.5rem;
+  }
+  
+  .auth-container {
+    max-width: 100%;
+    margin: 0 1rem;
+  }
 }
