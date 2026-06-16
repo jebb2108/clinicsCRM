@@ -24,6 +24,7 @@
 
 .start-time-label {
   font-weight: 500;
+  margin-left: 1rem;
   color: rgba(255, 255, 255, 0.75);
   background: transparent;
   border: none;
@@ -199,7 +200,8 @@
 /* ========== Прокручиваемая область таблицы ========== */
 .patients-table-wrap {
   max-height: none;
-  overflow: visible;
+  overflow-x: auto;
+  overflow-y: visible;
   margin-top: 1rem;
   padding: 0 14px;
   margin-left: -14px;
@@ -356,11 +358,41 @@ th:last-child, td:last-child { width: 14%; }
 /* ========== Адаптивность ========== */
 @media (max-width: 768px) {
   .toolbar {
+    flex-direction: column;
     align-items: flex-start;
   }
 
   .actions {
     width: 100%;
+    align-items: stretch;
+  }
+
+  .actions > *,
+  .action-with-toggle {
+    width: 100%;
+  }
+
+  .action-with-toggle {
+    gap: 8px;
+  }
+
+  .action-with-toggle .btn-add,
+  .pause-btn,
+  .upload-btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .start-time-label {
+    margin-left: 0;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+
+  .start-time-label input {
+    width: auto;
+    min-width: 128px;
   }
 
   .patients-table-wrap {
@@ -371,5 +403,26 @@ th:last-child, td:last-child { width: 14%; }
 
   #patients-table {
     min-width: 900px;
+  }
+}
+
+@media (max-width: 480px) {
+  .toolbar h2 {
+    font-size: 1.45rem;
+  }
+
+  .add-form {
+    padding: 1rem;
+  }
+
+  .btn-primary,
+  .btn-cancel {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .list-toggle-icon {
+    min-width: 24px;
+    width: 24px;
   }
 }

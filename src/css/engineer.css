@@ -7,6 +7,15 @@
   flex-wrap: wrap;
 }
 
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+#creds-table {
+  min-width: 720px;
+}
+
 /* Кнопка сохранения */
 .btn-save {
   margin-top: 2rem;
@@ -69,4 +78,26 @@ th:last-child, td:last-child { width: 35%; }
 .saved-notification.hidden {
   opacity: 0;
   pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .header-actions {
+    width: 100%;
+  }
+
+  .btn-save {
+    width: 100%;
+    margin-right: 0;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  #creds-table {
+    min-width: 640px;
+  }
+
+  td input {
+    width: 100%;
+  }
 }

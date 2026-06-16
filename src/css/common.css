@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+html {
+  min-width: 0;
+}
+
 body {
   font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, sans-serif;
   background: #0b1a2e;                  /* глубокий тёмно-синий */
@@ -13,6 +17,7 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 /* ---------- user‑panel (общий для всех) ---------- */
@@ -35,11 +40,14 @@ body {
   align-items: center;
   gap: 12px;
   font-size: 1rem;
+  min-width: 0;
+  flex-wrap: wrap;
 }
 
 .user-name {
   font-weight: 600;
   color: #ffffff;
+  overflow-wrap: anywhere;
 }
 
 .role-badge {
@@ -95,6 +103,7 @@ body {
   border-radius: 8px;
   padding: 2rem;
   box-shadow: none;
+  min-width: 0;
 }
 
 .site-footer {
@@ -211,6 +220,10 @@ body {
   margin-bottom: 1rem;
 }
 
+.dashboard-header > div {
+  min-width: 0;
+}
+
 .dashboard-header h2 {
   margin: 0;
   color: rgba(255, 255, 255, 0.85);
@@ -315,7 +328,7 @@ body {
 .list-overflow-hint {
   position: absolute;
   left: 50%;
-  bottom: 0.75rem;
+  bottom: -1.35rem;
   z-index: 20;
   width: min(92%, 680px);
   transform: translateX(-50%);
@@ -429,6 +442,7 @@ tr:hover td {
   font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.65);
   flex: 1 1 180px;
+  min-width: 0;
 }
 
 .form-row input,
@@ -496,8 +510,120 @@ tr.draggable {
 }
 
 @media (max-width: 768px) {
+  body {
+    padding: 1rem;
+  }
+
+  .user-panel {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.55rem 0.75rem;
+    padding: 0.5rem 0;
+  }
+
+  .user-info {
+    flex: 1 1 100%;
+    gap: 8px;
+  }
+
+  .info-line {
+    margin-left: 0;
+    margin-right: auto;
+  }
+
   .role-nav {
     flex-direction: column;
+    padding: 0.5rem;
+    gap: 8px;
+  }
+
+  .role-nav-btn {
+    width: 100%;
+    padding: 0.82rem 0.85rem;
+  }
+
+  .dashboard {
+    padding: 1.1rem;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.85rem;
+  }
+
+  .dashboard-header h2 {
+    font-size: 1.35rem;
+    margin-bottom: 0;
+  }
+
+  .section-description {
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+
+  .form-row {
+    gap: 0.9rem;
+  }
+
+  .form-row label {
+    flex-basis: 100%;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form-actions button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .saved-notification {
+    min-width: 0;
+    padding: 0 0.45rem;
+    font-size: 0.82rem;
+  }
+
+  .empty-state {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 0.75rem;
+  }
+
+  .dashboard {
+    padding: 0.85rem;
+  }
+
+  .role-nav {
+    margin-bottom: 0.9rem;
+  }
+
+  .role-nav-btn,
+  button {
+    font-size: 0.85rem;
+  }
+
+  .site-footer {
+    font-size: 0.76rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .user-panel,
+  .dashboard {
+    border-radius: 6px;
+  }
+
+  .user-info,
+  .info-line,
+  .logout-btn {
+    font-size: 0.8rem;
   }
 }
 
@@ -544,5 +670,16 @@ tr.drag-over td {
   color: #ffffff;
   font-weight: 600;
   font-size: 1.6rem;
-  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.85rem;
+  }
+
+  .dashboard-header h2 {
+    font-size: 1.35rem;
+  }
 }
