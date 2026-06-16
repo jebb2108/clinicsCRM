@@ -208,7 +208,7 @@
 }
 
 .patients-table-wrap.is-collapsed {
-  max-height: var(--collapsed-list-height, min(560px, calc(100vh - 260px)));
+  max-height: var(--collapsed-list-height, 520px);
   overflow-y: auto;
   overflow-x: auto;
 }
@@ -349,12 +349,6 @@ th:nth-child(7), td:nth-child(7) { width: 10%; }
 th:last-child, td:last-child { width: 14%; }
 
 /* ========== Адаптивность ========== */
-@media (max-width: 1200px) {
-  .patients-table-wrap.is-collapsed {
-    max-height: min(360px, calc(100vh - 300px));
-  }
-}
-
 @media (max-width: 768px) {
   .toolbar {
     align-items: flex-start;
@@ -368,10 +362,6 @@ th:last-child, td:last-child { width: 14%; }
     padding: 0 10px;
     margin-left: -10px;
     margin-right: -10px;
-  }
-
-  .patients-table-wrap.is-collapsed {
-    max-height: min(320px, calc(100vh - 340px));
   }
 
   #patients-table {

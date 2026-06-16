@@ -23,10 +23,10 @@ body {
   width: 100%;
   max-width: 1400px;
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: none;
   padding: 0.6rem 1.2rem;
   border-radius: 8px;
-  margin: 0 auto 1rem;
+  margin: 0 auto 0.75rem;
   color: #ffffff;
   font-family: inherit;
 }
@@ -271,14 +271,19 @@ body {
 }
 
 .list-toggle-icon {
-  width: 38px;
-  min-width: 38px;
+  width: 28px;
+  min-width: 28px;
   height: 38px;
   padding: 0;
-  border-radius: 999px;
+  border-radius: 0;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.22);
+  background: transparent;
+  border-color: transparent;
+}
+
+.list-toggle-icon:hover {
+  background: transparent;
+  border-color: transparent;
 }
 
 .list-toggle-icon.hidden {

@@ -63,7 +63,7 @@
 }
 
 .surgeon-table-wrap.is-collapsed {
-  max-height: var(--collapsed-list-height, min(560px, calc(100vh - 280px)));
+  max-height: var(--collapsed-list-height, 520px);
   overflow-y: auto;
   overflow-x: auto;
 }
@@ -530,7 +530,7 @@ tr.pause-row:hover td {
   }
 
   .surgeon-table-wrap.is-collapsed {
-    max-height: var(--collapsed-list-height, min(520px, calc(100vh - 320px)));
+    max-height: var(--collapsed-list-height, 520px);
   }
 
   .surgeon-approve-controls,

@@ -22,6 +22,7 @@ const profileSignatureInput = document.getElementById('profile-signature');
 const startTimeInput = document.getElementById('start-time');
 const addPhoneInput = document.getElementById('add-phone');
 const PATIENT_PHONE_MASK_SLOTS = [4, 5, 6, 9, 10, 11, 13, 14, 16, 17];
+const COLLAPSED_PATIENT_COUNT = 6;
 let draggedRowIndex = null;
 let isPatientListExpanded = false;
 
@@ -217,13 +218,14 @@ function renderProfileForm() {
 
 function updateCollapsedListHeight() {
   const rows = Array.from(tableBody.querySelectorAll('tr'));
+  const targetRow = rows
+    .filter(row => !row.classList.contains('pause-row'))[COLLAPSED_PATIENT_COUNT - 1];
 
-  if (rows.length < 8 || tableWrap.classList.contains('hidden')) {
+  if (!targetRow || tableWrap.classList.contains('hidden')) {
     tableWrap.style.removeProperty('--collapsed-list-height');
     return;
   }
 
-  const targetRow = rows[7];
   const wrapRect = tableWrap.getBoundingClientRect();
   const rowRect = targetRow.getBoundingClientRect();
   const computedStyle = window.getComputedStyle(tableWrap);
@@ -234,8 +236,9 @@ function updateCollapsedListHeight() {
 }
 
 function updatePatientListControls(totalRows) {
-  const hasPatients = totalRows > 0;
-  const canCollapse = totalRows > 8;
+  const patientRowsCount = tableBody.querySelectorAll('tr:not(.pause-row)').length;
+  const hasPatients = patientRowsCount > 0;
+  const canCollapse = patientRowsCount > COLLAPSED_PATIENT_COUNT;
 
   adminEmptyState.classList.toggle('hidden', hasPatients);
   tableWrap.classList.toggle('hidden', !hasPatients);
@@ -320,7 +323,7 @@ togglePatientListBtn.addEventListener('click', () => {
 });
 
 window.addEventListener('resize', () => {
-  if (getOperationList().length > 8) {
+  if (tableBody.querySelectorAll('tr:not(.pause-row)').length > COLLAPSED_PATIENT_COUNT) {
     updateCollapsedListHeight();
   }
 });

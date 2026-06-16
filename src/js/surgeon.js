@@ -28,6 +28,7 @@ const profileEmailInput = document.getElementById('profile-email');
 const profileSpecialtyInput = document.getElementById('profile-specialty');
 const profileSignatureInput = document.getElementById('profile-signature');
 const profileAutoExpandInput = document.getElementById('profile-auto-expand');
+const COLLAPSED_PATIENT_COUNT = 6;
 
 let currentUserName = sessionStorage.getItem('userName') || 'Хирург';
 let activeTab = 'current';
@@ -119,13 +120,14 @@ function shouldAutoExpandList() {
 
 function updateCollapsedListHeight() {
   const rows = Array.from(tableBody.querySelectorAll('tr'));
+  const targetRow = rows
+    .filter(row => !row.classList.contains('pause-row'))[COLLAPSED_PATIENT_COUNT - 1];
 
-  if (rows.length < 8 || tableWrap.classList.contains('hidden')) {
+  if (!targetRow || tableWrap.classList.contains('hidden')) {
     tableWrap.style.removeProperty('--collapsed-list-height');
     return;
   }
 
-  const targetRow = rows[7];
   const wrapRect = tableWrap.getBoundingClientRect();
   const rowRect = targetRow.getBoundingClientRect();
   const computedStyle = window.getComputedStyle(tableWrap);
@@ -136,8 +138,9 @@ function updateCollapsedListHeight() {
 }
 
 function updatePatientListControls(totalRows) {
-  const hasPatients = totalRows > 0;
-  const canCollapse = totalRows > 8;
+  const patientRowsCount = tableBody.querySelectorAll('tr:not(.pause-row)').length;
+  const hasPatients = patientRowsCount > 0;
+  const canCollapse = patientRowsCount > COLLAPSED_PATIENT_COUNT;
 
   if (canCollapse && isPatientListExpanded === null) {
     isPatientListExpanded = shouldAutoExpandList();
@@ -551,7 +554,7 @@ togglePatientListBtn.addEventListener('click', () => {
 });
 
 window.addEventListener('resize', () => {
-  if (getOperationList().length > 8) {
+  if (tableBody.querySelectorAll('tr:not(.pause-row)').length > COLLAPSED_PATIENT_COUNT) {
     updateCollapsedListHeight();
   }
 });
