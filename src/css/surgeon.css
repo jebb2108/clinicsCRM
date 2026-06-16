@@ -2,7 +2,7 @@
   width: 100%;
   max-width: 1400px;
   margin: 0 auto 1.2rem;
-  padding: 0.45rem;
+  padding: 0.65rem;
   display: flex;
   gap: 10px;
   background: rgba(255, 255, 255, 0.04);
@@ -13,7 +13,7 @@
 .surgeon-nav-btn {
   flex: 1;
   justify-content: center;
-  padding: 0.75rem 1rem;
+  padding: 0.95rem 1rem;
   border-radius: 10px;
   border-color: transparent;
 }
@@ -44,7 +44,7 @@
 }
 
 .section-description {
-  margin-top: 0.35rem;
+  margin-top: 0.8rem;
   color: rgba(255, 255, 255, 0.58);
   font-size: 0.92rem;
 }
@@ -275,12 +275,16 @@ tr.pause-row:hover td {
 .saved-notification {
   background: none;
   color: #fff;
-  padding: 0.4rem 1rem;
+  min-width: 92px;
+  height: 38px;
+  padding: 0 0.75rem;
   border-radius: 4px;
   font-size: 0.9rem;
   font-weight: 500;
   white-space: nowrap;
-  backdrop-filter: blur(4px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
   transition: opacity 0.3s ease;
 }
 
