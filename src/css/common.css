@@ -54,19 +54,19 @@ body {
 
 .logout-btn {
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  color: rgba(255, 255, 255, 0.75);
-  padding: 0.3rem 1rem;
-  border-radius: 4px;
+  border: none;
+  color: rgba(255, 255, 255, 0.62);
+  padding: 0;
+  border-radius: 0;
   font-weight: 500;
   cursor: pointer;
   font-size: 0.85rem;
+  line-height: 1;
   transition: all 0.2s;
 }
 
 .logout-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: transparent;
   color: #ffffff;
 }
 
@@ -77,7 +77,7 @@ body {
   align-items: center;
   gap: 10px;
   margin-left: auto;
-  margin-right: 20px;
+  margin-right: 14px;
 }
 
 .info-line span {
@@ -310,8 +310,9 @@ body {
 
 .list-overflow-hint {
   margin-top: 0.85rem;
-  color: rgba(255, 255, 255, 0.58);
+  color: rgba(255, 255, 255, 0.34);
   font-size: 0.82rem;
+  text-align: center;
 }
 
 .list-overflow-hint.hidden {

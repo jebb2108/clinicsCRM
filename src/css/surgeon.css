@@ -295,6 +295,8 @@ tr.pause-row:hover td {
 
 .empty-state {
   padding: 2rem;
+  width: 102%;
+  transform: translate(-1%, 0);
   border: 1px dashed rgba(255, 255, 255, 0.15);
   border-radius: 12px;
   text-align: center;
