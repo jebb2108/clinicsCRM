@@ -26,63 +26,55 @@ function renderTable() {
   const startTimes = calculateStartTimes();
   tableBody.innerHTML = '';
 
-  const showOptions = function(options, item) {
+  const createOptions = (options, value) => {
+    return options
+      .map(
+        val =>
+          `<option value="${val}" ${
+            value === val 
+              ? 'selected' 
+              : ''}>${val || '—'
+            }</option>`
+      )
+      .join('');
+  };
 
-      return options.map(
-        val => `<option value="${val}" ${item.ring === val ? 'selected' : ''}>${val || '—'}</option>`).join('')
-    }
-
-    const showSelect = function(indx, selection) {
-        return `<select class="type-select" data-index="${indx}">${selection}</select>`;
-      }
+  const createSelect = (index, field, options, value) => {
+    return `<select class="${field}-select" data-index="${index}" data-field="${field}">
+      ${createOptions(options, value)}
+    </select>`;
+  };
 
   list.forEach((item, index) => {
     const row = document.createElement('tr');
 
     if (item.type !== 'pause') {
-
-      const ringSelect = showOptions(ringOptions, item);
-      const flapSelect = showOptions(flapOptions, item)
-      const typeSelect = showOptions(typeOptions, item)
-
       row.innerHTML = `
         <td><strong>${startTimes[index] || '—'}</strong></td>
         <td>${escapeHtml(item.fio || '—')}</td>
         <td>${escapeHtml(item.card || '—')}</td>
-        <td>${showSelect(index, ringSelect)}</td>
-        <td>${showSelect(index, flapSelect)}</td>
-        <td>${showSelect(index, typeSelect)}</td>
+        <td>${createSelect(index, 'ring', ringOptions, item.ring || '')}</td>
+        <td>${createSelect(index, 'flap', flapOptions, item.flap || '')}</td>
+        <td>${createSelect(index, 'type', typeOptions, item.type || '')}</td>
         <td>${escapeHtml(item.notes || '—')}</td>
       `;
     } else {
       row.classList.add('pause-row');
       row.innerHTML = `
         <td><strong>${startTimes[index] || '—'}</strong></td>
-        <td colspan="7">⏸ ПАУЗА (${item.duration} мин)</td>
+        <td colspan="6">⏸ ПАУЗА (${item.duration} мин)</td>
       `;
     }
 
     tableBody.appendChild(row);
   });
 
-  // Автосохранение при изменении выпадающих списков
-  document.querySelectorAll('.ring-select').forEach(select => {
+  document.querySelectorAll('select[data-index]').forEach(select => {
     select.addEventListener('change', function () {
-      updatePatient(parseInt(this.dataset.index, 10), { ring: this.value });
-      showSaved();
-    });
-  });
+      const index = parseInt(this.dataset.index, 10);
+      const field = this.dataset.field;
 
-  document.querySelectorAll('.flap-select').forEach(select => {
-    select.addEventListener('change', function () {
-      updatePatient(parseInt(this.dataset.index, 10), { flap: this.value });
-      showSaved();
-    });
-  });
-
-  document.querySelectorAll('.type-select').forEach(select => {
-    select.addEventListener('change', function () {
-      updatePatient(parseInt(this.dataset.index, 10), { type: this.value });
+      updatePatient(index, { [field]: this.value });
       showSaved();
     });
   });

@@ -1,3 +1,4 @@
+/* Панель */
 .toolbar {
   margin-bottom: 2rem;
 }
@@ -14,50 +15,186 @@
   font-size: 0.9rem;
 }
 
-/* поля ввода (кольцо/лоскут) */
+/* Заголовок страницы  */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.dashboard-header h2 {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+}
+
+/* Контейнер таблицы со скроллом */
+.surgeon-table-wrap {
+  max-height: calc(100vh - 220px);
+  overflow-y: auto;
+  overflow-x: auto;
+  padding-right: 4px;
+  border-radius: 8px;
+}
+
+/* Скроллбар */
+
+.surgeon-table-wrap::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.surgeon-table-wrap::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+}
+
+.surgeon-table-wrap::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+.surgeon-table-wrap::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* Firefox */
+.surgeon-table-wrap {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+/* Таблица  */
+#surgeon-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  margin-top: 0;
+}
+
+#surgeon-table thead th {
+  text-align: left;
+  padding: 0.75rem 10px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #0b1a2e;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#surgeon-table thead th:first-child {
+  padding-left: 16px;
+}
+
+#surgeon-table thead th:last-child {
+  padding-right: 16px;
+}
+
+#surgeon-table tbody td {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 12px 10px;
+  border: none;
+  transition: background 0.2s;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9rem;
+}
+
+#surgeon-table tbody tr:hover td {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+#surgeon-table td:first-child {
+  border-radius: 8px 0 0 8px;
+  padding-left: 16px;
+}
+
+#surgeon-table td:last-child {
+  border-radius: 0 8px 8px 0;
+  padding-right: 16px;
+}
+
+/* Поля ввода */
 td input {
+  width: 90%;
+  padding: 0.4rem;
+
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 4px;
-  color: #ffffff;
-  padding: 0.4rem;
-  width: 90%;
+
+  color: #fff;
 }
 
 td input:focus {
-  border-color: rgba(255, 255, 255, 0.4);
   outline: none;
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
-/* ширина колонок (8 колонок для хирурга) */
-th:first-child, td:first-child { width: 14%; }
-th:nth-child(2), td:nth-child(2) { width: 20%; }
-th:nth-child(3), td:nth-child(3) { width: 10%; }
-th:nth-child(4), td:nth-child(4) { width: 8%; }
-th:nth-child(5), td:nth-child(5) { width: 8%; }
-th:nth-child(6), td:nth-child(6) { width: 10%; }
-th:last-child, td:last-child { width: 24%; }
+/* Выпадающие списки  */
+select {
+  width: 100%;
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1.1rem;
+}
 
+select::-ms-expand {
+  display: none;
+}
+
+select:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+option {
+  background: #1e2a3a;
+  color: #fff;
+}
+
+/* Строка паузы */
 tr.pause-row td {
   background: rgba(255, 255, 255, 0.08);
   color: rgba(255, 255, 255, 0.65);
 }
 
 tr.pause-row:hover td {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.14);
 }
 
 /* Уведомление "Сохранено" */
 .saved-notification {
   background: none;
-  color: white;
+  color: #fff;
   padding: 0.4rem 1rem;
   border-radius: 4px;
-  font-weight: 500;
   font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
   backdrop-filter: blur(4px);
   transition: opacity 0.3s ease;
-  white-space: nowrap;
 }
 
 .saved-notification.hidden {
@@ -65,39 +202,26 @@ tr.pause-row:hover td {
   pointer-events: none;
 }
 
+/* Ширина колонок */
+th:first-child,td:first-child { width: 12%; }
+th:nth-child(2),td:nth-child(2) { width: 24%; }
+th:nth-child(3),td:nth-child(3) { width: 12%; }
+th:nth-child(4), td:nth-child(4) { width: 10%; }
+th:nth-child(5),td:nth-child(5) { width: 10%; }
+th:nth-child(6),td:nth-child(6) { width: 12%; }
+th:last-child,td:last-child { width: 20%; }
 
-/* Стилизация нативных выпадающих списков */
-select {
-  padding: 0.5rem 2rem 0.5rem 0.75rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-  font-size: 0.9rem;
-  background: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
-  cursor: pointer;
-  transition: border-color 0.15s;
-  appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 0.5rem center;
-  background-size: 1.2rem;
-  font-family: inherit;
-}
+@media (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-/* Убираем стандартную стрелку в IE */
-select::-ms-expand {
-  display: none;
-}
+  .surgeon-table-wrap {
+    max-height: calc(100vh - 260px);
+  }
 
-/* Состояние фокуса */
-select:focus {
-  border-color: rgba(255, 255, 255, 0.4);
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
-}
-
-/* Опции выпадающего списка – тёмный фон */
-option {
-  background: #1e2a3a;
-  color: #ffffff;
+  #surgeon-table {
+    min-width: 900px;
+  }
 }

@@ -241,7 +241,7 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  background: rgba(18, 20, 26, 0.98);
+  background: #0b1a2e;
   backdrop-filter: blur(10px);
 }
 
