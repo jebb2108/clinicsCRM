@@ -260,7 +260,6 @@ body {
   transition: transform 0.2s ease;
 }
 
-.list-toggle-icon[aria-expanded="true"] .toggle-arrow,
 .icon-toggle-btn[aria-expanded="true"] .toggle-arrow {
   transform: rotate(180deg);
 }
@@ -293,6 +292,11 @@ body {
   border-bottom: 2px solid currentColor;
   transform: rotate(135deg);
   margin-top: 4px;
+}
+
+.list-toggle-icon[aria-expanded="true"] .toggle-arrow {
+  transform: rotate(-45deg);
+  margin-top: -4px;
 }
 
 .list-overflow-hint {
