@@ -24,30 +24,28 @@ body {
   max-width: 420px;
 }
 
-.auth-container h2 {
-  text-align: center;
-  margin-bottom: 1.8rem;
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
+/* ---------- Логотип ---------- */
 .logo {
+  background-color: #fdfdfd;
+  border-radius: 8px;
+  padding: 0.8rem 1.2rem;
   text-align: center;
   margin-bottom: 2.2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
 .logo img {
-  max-width: 180px;
+  display: block; 
+  max-width: 100%;
   height: auto;
-  display: inline-block;
+  margin: 0 auto;
 }
 
+/* ---------- Поля ввода и селект ---------- */
 .form-group {
   margin-bottom: 1.2rem;
 }
 
-/* Поля ввода и селект */
 .form-group select,
 .form-group input {
   width: 100%;
@@ -56,7 +54,7 @@ body {
   border-radius: 4px;
   font-size: 1rem;
   background: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
+  color: #fdfdfd;
   transition: border 0.2s, box-shadow 0.2s;
 }
 
@@ -71,12 +69,12 @@ body {
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
 }
 
-/* ---------- Кастомная стрелка для выпадающего списка ---------- */
+/* Кастомная стрелка для выпадающего списка */
 .form-group select {
-  appearance: none;                     /* убираем нативную стрелку */
+  appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  padding-right: 2.5rem;               /* место для иконки */
+  padding-right: 2.5rem;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-position: right 0.8rem center;
@@ -84,12 +82,10 @@ body {
   cursor: pointer;
 }
 
-/* Убираем стрелку в IE */
 .form-group select::-ms-expand {
   display: none;
 }
 
-/* Опции выпадающего списка */
 .form-group select option {
   background: #1e2a3a;
   color: #ffffff;
@@ -111,7 +107,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background: rgba(255, 255, 255, 0.1);   /* лёгкий серый оттенок */
+  background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.5);
   color: #ffffff;
 }
