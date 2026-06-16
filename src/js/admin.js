@@ -22,6 +22,7 @@ const profileSpecialtyInput = document.getElementById('profile-specialty');
 const profileSignatureInput = document.getElementById('profile-signature');
 const startTimeInput = document.getElementById('start-time');
 const addPhoneInput = document.getElementById('add-phone');
+const PATIENT_PHONE_MASK_SLOTS = [4, 5, 6, 9, 10, 11, 13, 14, 16, 17];
 let draggedRowIndex = null;
 let isPatientListExpanded = false;
 
@@ -82,9 +83,8 @@ function buildPatientPhoneMask(value) {
   const phoneState = getPatientPhoneState(value);
   const digits = phoneState.localDigits.split('');
   const masked = `+${phoneState.countryCode} (___) ___-__-__`.split('');
-  const slots = [4, 5, 6, 9, 10, 11, 13, 14, 16, 17];
 
-  slots.forEach((slotIndex, digitIndex) => {
+  PATIENT_PHONE_MASK_SLOTS.forEach((slotIndex, digitIndex) => {
     if (digits[digitIndex]) {
       masked[slotIndex] = digits[digitIndex];
     }
@@ -93,9 +93,48 @@ function buildPatientPhoneMask(value) {
   return masked.join('');
 }
 
+function countPatientLocalDigitsBeforeCaret(value, caretPosition) {
+  const rawValue = String(value || '');
+  const digits = rawValue.replace(/\D/g, '');
+  const digitsBeforeCaret = rawValue.slice(0, caretPosition).replace(/\D/g, '');
+
+  if (!digitsBeforeCaret.length) {
+    return 0;
+  }
+
+  if (rawValue.trim().startsWith('+')) {
+    return Math.max(digitsBeforeCaret.length - 1, 0);
+  }
+
+  if (digits.startsWith('9')) {
+    return Math.min(digitsBeforeCaret.length, 10);
+  }
+
+  return Math.max(digitsBeforeCaret.length - 1, 0);
+}
+
+function getPatientPhoneCaretPosition(maskedValue, localDigitCount) {
+  if (!maskedValue) {
+    return 0;
+  }
+
+  if (!localDigitCount) {
+    return PATIENT_PHONE_MASK_SLOTS[0];
+  }
+
+  if (localDigitCount >= PATIENT_PHONE_MASK_SLOTS.length) {
+    return maskedValue.length;
+  }
+
+  return PATIENT_PHONE_MASK_SLOTS[localDigitCount];
+}
+
 function syncPatientPhoneMask() {
   const rawValue = addPhoneInput.value.trim();
   const phoneState = getPatientPhoneState(rawValue);
+  const caretPosition = addPhoneInput.selectionStart ?? rawValue.length;
+  const localDigitsBeforeCaret = countPatientLocalDigitsBeforeCaret(addPhoneInput.value, caretPosition);
+  let nextValue = '';
 
   if (!rawValue) {
     addPhoneInput.value = '';
@@ -103,11 +142,18 @@ function syncPatientPhoneMask() {
   }
 
   if (!phoneState.hasDigits && phoneState.hasExplicitPlus) {
-    addPhoneInput.value = '+';
-    return;
+    nextValue = '+';
+  } else {
+    nextValue = phoneState.hasDigits ? buildPatientPhoneMask(rawValue) : '';
   }
 
-  addPhoneInput.value = phoneState.hasDigits ? buildPatientPhoneMask(rawValue) : '';
+  addPhoneInput.value = nextValue;
+
+  const nextCaretPosition = nextValue === '+'
+    ? 1
+    : getPatientPhoneCaretPosition(nextValue, localDigitsBeforeCaret);
+
+  addPhoneInput.setSelectionRange(nextCaretPosition, nextCaretPosition);
 }
 
 function isPatientPhoneComplete(value) {
