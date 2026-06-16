@@ -62,9 +62,34 @@ function saveOperationList(list) {
   localStorage.setItem(LIST_KEY, JSON.stringify(list));
 }
 
+function formatPhoneNumber(value) {
+  const rawValue = String(value || '').trim();
+  const digits = rawValue.replace(/\D/g, '');
+
+  if (!digits) return '';
+
+  let normalizedDigits = digits;
+
+  if (normalizedDigits.length === 10) {
+    normalizedDigits = `7${normalizedDigits}`;
+  } else if (normalizedDigits.length === 11 && normalizedDigits.startsWith('8')) {
+    normalizedDigits = `7${normalizedDigits.slice(1)}`;
+  }
+
+  if (normalizedDigits.length === 11 && normalizedDigits.startsWith('7')) {
+    return `+7 (${normalizedDigits.slice(1, 4)}) ${normalizedDigits.slice(4, 7)}-${normalizedDigits.slice(7, 9)}-${normalizedDigits.slice(9, 11)}`;
+  }
+
+  return rawValue;
+}
+
 function addPatient(patient) {
   const list = getOperationList();
-  list.push({ type: 'patient', ...patient });
+  list.push({
+    type: 'patient',
+    ...patient,
+    phone: formatPhoneNumber(patient.phone)
+  });
   saveOperationList(list);
 }
 
@@ -94,7 +119,13 @@ function updatePatient(index, updatedFields) {
   console.log('Текущий пациент', list[index]);
   // Проверяем, что элемент не является паузой (у пауз type === 'pause')
   if (list[index] && list[index].type !== 'pause') {
-    list[index] = { ...list[index], ...updatedFields };
+    list[index] = {
+      ...list[index],
+      ...updatedFields,
+      ...(Object.prototype.hasOwnProperty.call(updatedFields, 'phone')
+        ? { phone: formatPhoneNumber(updatedFields.phone) }
+        : {})
+    };
     saveOperationList(list);
     console.log('Сохранено:', list[index]);
   } else {

@@ -21,6 +21,7 @@ const profileEmailInput = document.getElementById('profile-email');
 const profileSpecialtyInput = document.getElementById('profile-specialty');
 const profileSignatureInput = document.getElementById('profile-signature');
 const startTimeInput = document.getElementById('start-time');
+const addPhoneInput = document.getElementById('add-phone');
 let draggedRowIndex = null;
 let isPatientListExpanded = false;
 
@@ -236,7 +237,7 @@ document.getElementById('save-patient').addEventListener('click', () => {
   const fio = document.getElementById('add-fio').value.trim();
   const card = document.getElementById('add-card').value.trim();
   const bday = document.getElementById('add-bday').value.trim();
-  const phone = document.getElementById('add-phone').value.trim();
+  const phone = formatPhoneNumber(addPhoneInput.value);
 
   if (!fio) {
     alert('Поле "ФИО" обязательно для заполнения.');
@@ -253,6 +254,8 @@ document.getElementById('save-patient').addEventListener('click', () => {
     alert('Поле "Телефон" обязательно для заполнения.');
     return;
   }
+
+  addPhoneInput.value = phone;
 
   const type = document.getElementById('add-type').value;
 
@@ -276,9 +279,13 @@ function clearAddForm() {
   document.getElementById('add-fio').value = '';
   document.getElementById('add-card').value = '';
   document.getElementById('add-bday').value = '';
-  document.getElementById('add-phone').value = '';
+  addPhoneInput.value = '';
   document.getElementById('add-type').selectedIndex = 0;
 }
+
+addPhoneInput.addEventListener('blur', () => {
+  addPhoneInput.value = formatPhoneNumber(addPhoneInput.value);
+});
 
 // ========== Добавление паузы ==========
 document.getElementById('add-pause-btn').addEventListener('click', () => {
@@ -361,7 +368,7 @@ function importPatientsFromExcel(event) {
 
         const duration = OPERATION_TYPES[type] || 15;
 
-        const phone = String(row[4] || '').trim();
+        const phone = formatPhoneNumber(String(row[4] || '').trim());
         const card = String(row[5] || '').trim();
 
         patients.push({ fio, card, bday, phone, type, duration, ring: '—', flap: '—' });
