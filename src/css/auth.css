@@ -1,4 +1,3 @@
-/* auth.css */
 * {
   margin: 0;
   padding: 0;
@@ -7,7 +6,7 @@
 
 body {
   font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, sans-serif;
-  background: #0b1a2e;                /* тёмный фон, будет виден сквозь полупрозрачное окно */
+  background: #0b1a2e;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,28 +18,28 @@ body {
   width: 100%;
   max-width: 420px;
   border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-  /* фон окна: #fefefe с прозрачностью, эффект матового стекла */
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    inset 0 0 15px rgba(0, 0, 0, 0.5);
   background: #fefefe;
-  backdrop-filter: blur(12px);         /* размытие фона за окном */
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  padding: 2.5rem 2.5rem 2rem;        /* отступы без изменений */
+  backdrop-filter: blur(12px);
+  padding: 2.5rem 2.5rem 2rem;
 }
 
 /* === ЛОГОТИП === */
 .logo {
   display: flex;
   justify-content: center;
-  margin-bottom: 2rem;               /* отступ до формы сохранён */
+  margin-bottom: 2rem;
 }
 
 .logo img {
-  width: 240px;                      /* увеличенный квадрат */
+  width: 240px;
   height: auto;
   aspect-ratio: 1 / 1;
   object-fit: contain;
   display: block;
-  }
+}
 
 /* === ФОРМА === */
 .auth-content {
@@ -51,7 +50,6 @@ body {
   margin-bottom: 1.2rem;
 }
 
-/* Поля ввода и селект — теперь контрастные на белом фоне */
 .form-group select,
 .form-group input {
   width: 100%;
@@ -59,8 +57,8 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   font-size: 1rem;
-  background: rgba(0, 0, 0, 0.06);    /* едва заметный серый фон */
-  color: #1a1a1a;                     /* тёмный текст */
+  background: rgba(0, 0, 0, 0.06);
+  color: #1a1a1a;
   transition: border 0.2s, box-shadow 0.2s;
 }
 
@@ -75,7 +73,6 @@ body {
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
-/* Кастомная стрелка — теперь тёмная */
 .form-group select {
   appearance: none;
   -webkit-appearance: none;
@@ -100,7 +97,7 @@ body {
 #login-btn {
   width: 100%;
   padding: 0.75rem;
-  background:  #001f41;
+  background: #001f41;
   border: 1px solid rgba(226, 187, 187, 0.3);
   border-radius: 4px;
   color: white;
@@ -110,7 +107,6 @@ body {
   margin-top: 0.5rem;
 }
 
-/* Кнопка "Войти" */
 button[type="submit"] {
   width: 100%;
   padding: 0.75rem;
@@ -146,7 +142,7 @@ button[type="submit"]:hover {
   }
 
   .logo img {
-    width: 90px;                     /* немного меньше на телефонах */
+    width: 90px;
   }
 
   .logo {
