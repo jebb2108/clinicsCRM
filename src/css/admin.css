@@ -25,10 +25,10 @@
 .start-time-label {
   font-weight: 500;
   color: rgba(255, 255, 255, 0.75);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 0.25rem 1rem;
-  border-radius: 4px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  border-radius: 0;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -220,13 +220,18 @@
 }
 
 .patients-table-wrap::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.03);
+  background: transparent;
   border-radius: 10px;
 }
 
 .patients-table-wrap::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: transparent;
   border-radius: 10px;
+}
+
+.patients-table-wrap.is-scrolling::-webkit-scrollbar-thumb,
+.patients-table-wrap:hover::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .patients-table-wrap::-webkit-scrollbar-thumb:hover {
@@ -323,19 +328,19 @@ tr.drag-over td {
 
 /* Кнопка удаления */
 .btn-delete {
-  background: none;
-  border: 1px solid rgba(255, 100, 100, 0.4);
-  color: #ff6b6b;
-  padding: 4px 12px;
-  border-radius: 4px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 107, 107, 0.78);
+  padding: 4px 0;
+  border-radius: 0;
   cursor: pointer;
   font-size: 0.8rem;
-  transition: background 0.2s, border-color 0.2s;
+  transition: color 0.2s;
 }
 
 .btn-delete:hover {
-  background: rgba(255, 100, 100, 0.2);
-  border-color: #ff6b6b;
+  background: transparent;
+  color: #ffffff;
 }
 
 /* Ширина колонок */

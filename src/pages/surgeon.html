@@ -45,24 +45,26 @@
       <div id="current-empty-state" class="empty-state hidden">
         Список пуст. Пациенты пока не добавлены.
       </div>
-      <div class="surgeon-table-wrap">
-        <table id="surgeon-table">
-          <thead>
-            <tr>
-              <th>Начало</th>
-              <th>Глаз</th>
-              <th>ФИО пациента</th>
-              <th>№ карты</th>
-              <th>Кольцо</th>
-              <th>Лоскут</th>
-              <th>Операция</th>
-              <th>Особенности</th>
-            </tr>
-          </thead>
-          <tbody id="table-body"></tbody>
-        </table>
+      <div class="list-table-shell">
+        <div class="surgeon-table-wrap">
+          <table id="surgeon-table">
+            <thead>
+              <tr>
+                <th>Начало</th>
+                <th>Глаз</th>
+                <th>ФИО пациента</th>
+                <th>№ карты</th>
+                <th>Кольцо</th>
+                <th>Лоскут</th>
+                <th>Операция</th>
+                <th>Особенности</th>
+              </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+        <div id="surgeon-list-hint" class="list-overflow-hint hidden">Показаны не все пациенты. Прокрутите список или разверните его, чтобы увидеть остальных.</div>
       </div>
-      <div id="surgeon-list-hint" class="list-overflow-hint hidden">Показаны не все пациенты. Прокрутите список или разверните его, чтобы увидеть остальных.</div>
       <div id="approval-status" class="approval-status hidden"></div>
     </section>
 

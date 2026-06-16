@@ -308,8 +308,18 @@ body {
   margin-top: 4px;
 }
 
+.list-table-shell {
+  position: relative;
+}
+
 .list-overflow-hint {
-  margin-top: 0.85rem;
+  position: absolute;
+  left: 50%;
+  bottom: 0.75rem;
+  z-index: 20;
+  width: min(92%, 680px);
+  transform: translateX(-50%);
+  pointer-events: none;
   color: rgba(255, 255, 255, 0.34);
   font-size: 0.82rem;
   text-align: center;
