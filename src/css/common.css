@@ -286,17 +286,17 @@ body {
 }
 
 .list-toggle-icon .toggle-arrow {
-  width: 10px;
-  height: 10px;
-  border-left: 2px solid currentColor;
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid currentColor;
   border-bottom: 2px solid currentColor;
-  transform: rotate(135deg);
-  margin-top: 4px;
+  transform: rotate(45deg);
+  margin-top: -4px;
 }
 
 .list-toggle-icon[aria-expanded="true"] .toggle-arrow {
-  transform: rotate(-45deg);
-  margin-top: -4px;
+  transform: rotate(225deg);
+  margin-top: 4px;
 }
 
 .list-overflow-hint {
