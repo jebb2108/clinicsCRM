@@ -24,7 +24,17 @@
     <div class="actions">
       <button id="toggle-add-form" class="btn-add">Добавить запись</button>
       <button id="add-pause-btn" class="pause-btn">Добавить паузу</button>
-      <button id="download-word" class="download-btn">Скачать Word</button>
+      <input
+        type="file"
+        id="excel-file"
+        accept=".xls,.xlsx"
+        hidden
+      >
+      <label for="excel-file" class="upload-btn">
+        Загрузить Excel
+      </label>
+      
+      
       <label class="start-time-label">
         Начало опер дня: <input type="time" id="start-time" value="09:00">
       </label>
@@ -73,6 +83,7 @@
   </table>
 </div>
 <script src="/js/storage.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script src="/js/user-panel.js"></script>
 <script src="/js/admin.js"></script>
 </body>

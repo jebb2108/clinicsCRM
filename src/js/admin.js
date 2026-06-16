@@ -183,48 +183,110 @@ document.getElementById('start-time').addEventListener('change', function () {
 
 
 // ========== Скачивание Word ==========
-document.getElementById('download-word').addEventListener('click', () => {
-  const list = getOperationList();
-  const startTimes = calculateStartTimes();
-  let html = `<!DOCTYPE html>
-  <html>
-  <head><meta charset="UTF-8"><title>Список операций</title></head>
-  <body>
-    <h2>Список пациентов:</h2>
-    <table border="1" cellpadding="5" style="border-collapse:collapse;">
-      <tr><th>Время</th><th>ФИО</th><th>№ карты</th><th>Телефон</th><th>Особенности</th></tr>`;
-  list.forEach((item, idx) => {
-    if (item.type !== 'pause') {
-      html += `<tr>
-        <td>${startTimes[idx]}</td>
-        <td>${escapeHtml(item.fio)}</td>
-        <td>${escapeHtml(item.card)}</td>
-        <td>${escapeHtml(item.phone)}</td>
-        <td>${escapeHtml(item.type)}</td>
-      </tr>`;
-    } else {
-      html += `<tr style="background-color:#f1f3f5;">
-        <td>${startTimes[idx]}</td>
-        <td colspan="4" style="text-align:center;">ПАУЗА (${item.duration} мин)</td>
-      </tr>`;
-    }
-  });
-  html += `</table></body></html>`;
 
-  // Создаём Blob с типом application/msword
-  const blob = new Blob([html], { type: 'application/msword' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  const now = new Date();
-  const dateStr = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}_${now.getHours()}-${now.getMinutes()}`;
-  a.href = url;
-  a.download = `список_операций_${dateStr}.doc`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-});
+function importPatientsFromExcel(event) {
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function (e) {
+    try {
+      const workbook = XLSX.read(e.target.result, {
+        type: 'array'
+      });
+
+      const sheet = workbook.Sheets[workbook.SheetNames[0]];
+
+      const rows = XLSX.utils.sheet_to_json(sheet, {
+        header: 1,
+        defval: ''
+      });
+
+      const OPERATION_TYPES = {
+        'ФЕМТО': 15,
+        'ФРК': 10
+      };
+
+      const patients = [];
+
+      rows.forEach(row => {
+
+        // Пропускаем пустые строки
+        if (!row || row.length < 6) return;
+
+        // Пропускаем строку заголовка
+        const fioColumn = String(row[2] || '').trim();
+
+        if (
+          fioColumn.includes('Ф.И.О.') ||
+          fioColumn.includes('пациента')
+        ) {
+          return;
+        }
+
+        if (!fioColumn) return;
+
+        // ФИО и дата рождения находятся в одной ячейке
+        const fioParts = fioColumn
+          .split(/\r?\n/)
+          .map(v => v.trim())
+          .filter(Boolean);
+
+        const fio = fioParts[0] || '';
+        const bday = fioParts[1] || '';
+
+        // Описание операции
+        const description = String(row[3] || '').trim();
+
+        const type =
+          description
+            .split(/\s+/)[0]
+            ?.toUpperCase() || 'ФРК';
+
+        const duration = OPERATION_TYPES[type] || 10;
+
+        const phone = String(row[4] || '').trim();
+        const card = String(row[5] || '').trim();
+
+        patients.push({
+          fio,
+          card,
+          bday,
+          phone,
+          type,
+          duration,
+          ring: '—',
+          flap: '—'
+        });
+      });
+
+      if (!patients.length) {
+        alert('Пациенты не найдены.');
+        return;
+      }
+
+      patients.forEach(patient => addPatient(patient));
+
+      renderTable();
+
+      alert(`Импортировано пациентов: ${patients.length}`);
+
+      console.log('Импортированные пациенты:', patients);
+
+    } catch (err) {
+      console.error(err);
+      alert('Ошибка чтения Excel-файла.');
+    }
+
+    event.target.value = '';
+  };
+
+  reader.readAsArrayBuffer(file);
+}
 
 // ========== Инициализация ==========
+document.getElementById('excel-file').addEventListener('change', importPatientsFromExcel);
 document.getElementById('start-time').value = getSettings().startTime;
 renderTable();

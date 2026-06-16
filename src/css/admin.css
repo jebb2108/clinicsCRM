@@ -51,7 +51,7 @@
 /* ========== Кнопки ========== */
 .btn-add,
 .pause-btn,
-.download-btn {
+.upload-btn {
   padding: 0.5rem 1.5rem;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 4px;
@@ -64,7 +64,7 @@
 
 .btn-add:hover,
 .pause-btn:hover,
-.download-btn:hover {
+.upload-btn:hover {
   background: rgba(255, 255, 255, 0.15);
   border-color: rgba(255, 255, 255, 0.3);
 }
@@ -212,6 +212,7 @@
 
 #patients-table thead th:last-child {
   padding-right: 16px;
+  text-align: center;
 }
 
 #patients-table tbody td {
