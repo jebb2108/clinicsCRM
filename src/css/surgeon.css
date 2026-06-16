@@ -133,6 +133,29 @@ td input {
   color: #fff;
 }
 
+.notes-input {
+  width: 100%;
+  min-height: 38px;
+  padding: 8px;
+  resize: vertical;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 4px;
+  color: #fff;
+  font-size: 0.9rem;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.notes-input:focus {
+  outline: none;
+  border-color: rgba(255,255,255,0.4);
+}
+
+.notes-input::placeholder {
+  color: rgba(255,255,255,0.4);
+}
+
 td input:focus {
   outline: none;
   border-color: rgba(255, 255, 255, 0.4);
