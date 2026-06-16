@@ -20,30 +20,78 @@
     <button id="logout-btn" class="logout-btn">Выйти</button>
   </div>
 
+  <nav class="role-nav" aria-label="Разделы инженера">
+    <button class="role-nav-btn is-active" type="button" data-tab="current">Главная</button>
+    <button class="role-nav-btn" type="button" data-tab="profile">Личный кабинет</button>
+  </nav>
+
   <!-- Основной контент -->
   <div class="dashboard">
-    <div class="dashboard-header">
-      <h2>Учётные записи персонала</h2>
-      <div id="saved-notification" class="saved-notification hidden">✓ Сохранено</div>
-      <div class="header-actions">
-        <div id="saved-notification" class="saved-notification hidden">✓ Сохранено</div>
+    <div id="saved-notification" class="saved-notification hidden">✓ Сохранено</div>
+    <section class="dashboard-view is-active" data-view="current">
+      <div class="dashboard-header">
+        <h2>Учётные записи персонала</h2>
       </div>
-    </div>
-    
-    <table id="creds-table">
-      <thead>
-        <tr>
-          <th>Роль</th>
-          <th>Логин</th>
-          <th>Пароль</th>
-          <th>Отображаемое имя</th>
-        </tr>
-      </thead>
-      <tbody id="creds-body"></tbody>
-    </table>
-    <button id="save-creds" class="btn-save">Сохранить изменения</button>
-    <button id="download-patients" class="btn-save">Скачать список пациентов</button>
+      
+      <table id="creds-table">
+        <thead>
+          <tr>
+            <th>Роль</th>
+            <th>Логин</th>
+            <th>Пароль</th>
+            <th>Отображаемое имя</th>
+          </tr>
+        </thead>
+        <tbody id="creds-body"></tbody>
+      </table>
+      <button id="save-creds" class="btn-save">Сохранить изменения</button>
+      <button id="download-patients" class="btn-save">Скачать список пациентов</button>
+    </section>
+
+    <section class="dashboard-view hidden" data-view="profile">
+      <div class="dashboard-header">
+        <div>
+          <h2>Личный кабинет</h2>
+          <p class="section-description">Данные инженера и служебные настройки профиля.</p>
+        </div>
+      </div>
+      <form id="engineer-profile-form" class="profile-form">
+        <div class="form-row">
+          <label>Отображаемое имя
+            <input type="text" id="profile-name">
+          </label>
+          <label>Логин
+            <input type="text" id="profile-login">
+          </label>
+          <label>Пароль
+            <input type="password" id="profile-password">
+          </label>
+        </div>
+        <div class="form-row">
+          <label>Телефон
+            <input type="tel" id="profile-phone">
+          </label>
+          <label>Email
+            <input type="email" id="profile-email">
+          </label>
+          <label>Роль
+            <input type="text" id="profile-specialty">
+          </label>
+        </div>
+        <div class="form-row">
+          <label>Комментарий
+            <textarea id="profile-signature" rows="4" placeholder="Служебные заметки по профилю"></textarea>
+          </label>
+        </div>
+        <div class="form-actions">
+          <button class="btn-primary" type="submit">Сохранить изменения</button>
+        </div>
+      </form>
+    </section>
   </div>
+  <footer class="site-footer">
+    © 2026 ClinicsCRM. All rights reserved.
+  </footer>
 
   <script src="/js/storage.js"></script>
   <script src="/js/engineer.js"></script>

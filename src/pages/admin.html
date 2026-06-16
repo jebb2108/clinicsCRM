@@ -18,72 +18,129 @@
   <button id="logout-btn" class="logout-btn">Выйти</button>
 </div>
 
+<nav class="role-nav" aria-label="Разделы администратора">
+  <button class="role-nav-btn is-active" type="button" data-tab="current">Главная</button>
+  <button class="role-nav-btn" type="button" data-tab="profile">Личный кабинет</button>
+</nav>
+
 <div class="dashboard">
-  <div class="toolbar">
-    <h2>Список операций</h2>
-    <div class="actions">
-      <button id="toggle-add-form" class="btn-add">Добавить запись</button>
-      <button id="add-pause-btn" class="pause-btn">Добавить паузу</button>
-      <input
-        type="file"
-        id="excel-file"
-        accept=".xls,.xlsx"
-        hidden
-      >
-      <label for="excel-file" class="upload-btn">
-        Загрузить Excel
-      </label>
-      
-      
-      <label class="start-time-label">
-        Начало опер дня: <input type="time" id="start-time" value="09:00">
-      </label>
+  <div id="saved-notification" class="saved-notification hidden">✓ Сохранено</div>
+  <section class="dashboard-view is-active" data-view="current">
+    <div class="toolbar">
+      <h2>Список операций</h2>
+      <div class="actions">
+        <button id="toggle-add-form" class="btn-add">Добавить запись</button>
+        <button id="add-pause-btn" class="pause-btn">Добавить паузу</button>
+        <input
+          type="file"
+          id="excel-file"
+          accept=".xls,.xlsx"
+          hidden
+        >
+        <label for="excel-file" class="upload-btn">
+          Загрузить Excel
+        </label>
+        <label class="start-time-label">
+          Начало опер дня: <input type="time" id="start-time" value="09:00">
+        </label>
+      </div>
     </div>
-  </div>
 
-  <div id="add-form" class="add-form hidden">
-  <h3>Новая запись</h3>
-  <div class="form-row">
-    <label>ФИО пациента: <input type="text" id="add-fio" required></label>
-  </div>
-  <div class="form-row">
-    <label>Тип операции:
-      <select id="add-type">
-        <option value="ФЕМТО">ФЕМТО</option>
-        <option value="ФРК">ФРК</option>
-        <option value="ДОКОРРЕКЦИЯ">ДОКОРРЕКЦИЯ</option>
-        <option value="ПТК">ПТК</option>
-      </select>
-    </label>
-    <label>Дата рождения: <input type="datetime" id="add-bday" required></label>
-    <label>№ медкарты: <input type="text" id="add-card" required></label>
-    <label>Телефон: <input type="text" id="add-phone" required></label>
-  </div>
-  <div class="form-actions">
-    <button id="save-patient" class="btn-primary">Сохранить</button>
-    <button id="cancel-add" class="btn-cancel">Отмена</button>
-  </div>
-</div>
+    <div id="add-form" class="add-form hidden">
+      <h3>Новая запись</h3>
+      <div class="form-row">
+        <label>ФИО пациента: <input type="text" id="add-fio" required></label>
+      </div>
+      <div class="form-row">
+        <label>Тип операции:
+          <select id="add-type">
+            <option value="ФЕМТО">ФЕМТО</option>
+            <option value="ФРК">ФРК</option>
+            <option value="ДОКОРРЕКЦИЯ">ДОКОРРЕКЦИЯ</option>
+            <option value="ПТК">ПТК</option>
+          </select>
+        </label>
+        <label>Дата рождения: <input type="datetime" id="add-bday" required></label>
+        <label>№ медкарты: <input type="text" id="add-card" required></label>
+        <label>Телефон: <input type="text" id="add-phone" required></label>
+      </div>
+      <div class="form-actions">
+        <button id="save-patient" class="btn-primary">Сохранить</button>
+        <button id="cancel-add" class="btn-cancel">Отмена</button>
+      </div>
+    </div>
 
-  <!-- Таблица -->
-  <div class="patients-table-wrap">
-  <table id="patients-table">
-    <thead>
-      <tr>
-        <th></th>
-        <th>Начало</th>
-        <th>ФИО пациента</th>
-        <th>№ карты</th>
-        <th>Дата рожд.</th>
-        <th>Телефон</th>
-        <th>Операция</th>
-        <th>Действия</th>
-      </tr>
-    </thead>
-    <tbody id="table-body"></tbody>
-  </table>
+    <div id="admin-empty-state" class="empty-state hidden">
+      Список пуст. Пациенты пока не добавлены.
+    </div>
+    <div class="patients-table-wrap">
+      <table id="patients-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Начало</th>
+            <th>ФИО пациента</th>
+            <th>№ карты</th>
+            <th>Дата рожд.</th>
+            <th>Телефон</th>
+            <th>Операция</th>
+            <th>Действия</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+    <div id="admin-list-controls" class="list-controls hidden">
+      <button id="toggle-patient-list" class="icon-toggle-btn pill-toggle-btn" type="button" aria-expanded="false" title="Развернуть список">
+        <span id="toggle-patient-list-label">Развернуть список</span>
+      </button>
+    </div>
+  </section>
+
+  <section class="dashboard-view hidden" data-view="profile">
+    <div class="dashboard-header">
+      <div>
+        <h2>Личный кабинет</h2>
+        <p class="section-description">Данные администратора и базовые настройки рабочего профиля.</p>
+      </div>
+    </div>
+    <form id="admin-profile-form" class="profile-form">
+      <div class="form-row">
+        <label>Отображаемое имя
+          <input type="text" id="profile-name">
+        </label>
+        <label>Логин
+          <input type="text" id="profile-login">
+        </label>
+        <label>Пароль
+          <input type="password" id="profile-password">
+        </label>
+      </div>
+      <div class="form-row">
+        <label>Телефон
+          <input type="tel" id="profile-phone">
+        </label>
+        <label>Email
+          <input type="email" id="profile-email">
+        </label>
+        <label>Роль
+          <input type="text" id="profile-specialty">
+        </label>
+      </div>
+      <div class="form-row">
+        <label>Комментарий
+          <textarea id="profile-signature" rows="4" placeholder="Короткая служебная пометка"></textarea>
+        </label>
+      </div>
+      <div class="form-actions">
+        <button class="btn-primary" type="submit">Сохранить изменения</button>
+      </div>
+    </form>
+  </section>
 </div>
-</div>
+<footer class="site-footer">
+  © 2026 ClinicsCRM. All rights reserved.
+</footer>
 <script src="/js/storage.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script src="/js/user-panel.js"></script>

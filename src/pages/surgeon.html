@@ -20,30 +20,149 @@
     <button id="logout-btn" class="logout-btn">Выйти</button>
   </div>
 
+  <nav class="role-nav surgeon-nav" aria-label="Разделы хирурга">
+    <button class="role-nav-btn surgeon-nav-btn is-active" type="button" data-tab="current">Главная</button>
+    <button class="role-nav-btn surgeon-nav-btn" type="button" data-tab="approved">Утвержденные операции</button>
+    <button class="role-nav-btn surgeon-nav-btn" type="button" data-tab="profile">Личный кабинет</button>
+  </nav>
+
   <!-- Основной контент -->
   <div class="dashboard">
-    <div class="dashboard-header">
-      <h2>Список пациентов</h2>
-      <div id="saved-notification" class="saved-notification hidden">✓ Сохранено</div>
-    </div>
-    <div class="surgeon-table-wrap">
-      <table id="surgeon-table">
-        <thead>
-          <tr>
-            <th>Начало</th>
-            <th>Глаз</th>
-            <th>ФИО пациента</th>
-            <th>№ карты</th>
-            <th>Кольцо</th>
-            <th>Лоскут</th>
-            <th>Операция</th>
-            <th>Особенности</th>
-          </tr>
-        </thead>
-        <tbody id="table-body"></tbody>
-      </table>
+    <div id="saved-notification" class="saved-notification hidden">✓ Сохранено</div>
+
+    <section class="dashboard-view is-active" data-view="current">
+      <div class="dashboard-header">
+        <div>
+          <h2>Список пациентов</h2>
+          <p class="section-description">Текущий операционный день, редактирование параметров и утверждение списка.</p>
+        </div>
+        <div id="surgeon-approve-controls" class="list-controls surgeon-approve-controls">
+          <button id="approve-list-btn" class="approve-list-btn" type="button">Утвердить список</button>
+        </div>
+      </div>
+      <div id="current-empty-state" class="empty-state hidden">
+        Список пуст. Пациенты пока не добавлены.
+      </div>
+      <div class="surgeon-table-wrap">
+        <table id="surgeon-table">
+          <thead>
+            <tr>
+              <th>Начало</th>
+              <th>Глаз</th>
+              <th>ФИО пациента</th>
+              <th>№ карты</th>
+              <th>Кольцо</th>
+              <th>Лоскут</th>
+              <th>Операция</th>
+              <th>Особенности</th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+      <div id="surgeon-list-controls" class="list-controls surgeon-list-controls">
+        <button id="toggle-patient-list" class="icon-toggle-btn pill-toggle-btn hidden" type="button" aria-expanded="false" title="Развернуть список">
+          <span id="toggle-patient-list-label">Развернуть список</span>
+        </button>
+      </div>
+      <div id="approval-status" class="approval-status hidden"></div>
+    </section>
+
+    <section class="dashboard-view hidden" data-view="approved">
+      <div class="dashboard-header">
+        <div>
+          <h2>Утвержденные операции</h2>
+          <p class="section-description">Архив утвержденных списков по датам с выгрузкой в Excel.</p>
+        </div>
+      </div>
+      <div id="approved-empty-state" class="empty-state hidden">
+        Утвержденных списков пока нет.
+      </div>
+      <div id="approved-table-wrap" class="approved-table-wrap hidden">
+        <table id="approved-table">
+          <thead>
+            <tr>
+              <th>Дата операции</th>
+              <th>Утвержден</th>
+              <th>Статус</th>
+              <th>Хирург</th>
+              <th>Пациенты</th>
+              <th>Действие</th>
+            </tr>
+          </thead>
+          <tbody id="approved-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="dashboard-view hidden" data-view="profile">
+      <div class="dashboard-header">
+        <div>
+          <h2>Личный кабинет</h2>
+          <p class="section-description">Изменение данных врача и базовых настроек рабочего экрана.</p>
+        </div>
+      </div>
+      <form id="surgeon-profile-form" class="profile-form">
+        <div class="form-row">
+          <label>Отображаемое имя
+            <input type="text" id="profile-name" autocomplete="name">
+          </label>
+          <label>Логин
+            <input type="text" id="profile-login" autocomplete="username">
+          </label>
+          <label>Пароль
+            <input type="password" id="profile-password" autocomplete="current-password">
+          </label>
+        </div>
+        <div class="form-row">
+          <label>Телефон
+            <input type="tel" id="profile-phone" autocomplete="tel">
+          </label>
+          <label>Email
+            <input type="email" id="profile-email" autocomplete="email">
+          </label>
+          <label>Специализация
+            <input type="text" id="profile-specialty">
+          </label>
+        </div>
+        <div class="form-row">
+          <label>Подпись / комментарий
+            <textarea id="profile-signature" rows="4" placeholder="Короткая подпись для архивных листов и служебных заметок"></textarea>
+          </label>
+        </div>
+        <div class="profile-settings">
+          <label class="checkbox-row">
+            <input type="checkbox" id="profile-auto-expand">
+            <span>Автоматически разворачивать длинный список пациентов</span>
+          </label>
+        </div>
+        <div class="form-actions">
+          <button id="save-profile-btn" class="btn-primary" type="submit">Сохранить изменения</button>
+        </div>
+      </form>
+    </section>
+  </div>
+  <div id="approval-modal" class="modal-overlay hidden" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="approval-modal-title">
+      <div class="modal-header">
+        <h3 id="approval-modal-title">Утвердить операционный день</h3>
+      </div>
+      <p class="modal-description">Выберите дату проведения операции, чтобы перенести текущий список в утвержденные операции.</p>
+      <div class="modal-body">
+        <label>
+          Дата операции
+          <input type="date" id="operation-date">
+        </label>
+      </div>
+      <div class="modal-actions">
+        <button id="confirm-approval-btn" class="btn-primary" type="button">Подтвердить</button>
+        <button id="cancel-approval-btn" class="btn-cancel" type="button">Отмена</button>
+      </div>
     </div>
   </div>
+  <footer class="site-footer">
+    © 2026 ClinicsCRM. All rights reserved.
+  </footer>
 
   <script src="/js/storage.js"></script>
   <script src="/js/surgeon.js"></script>

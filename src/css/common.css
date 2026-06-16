@@ -11,6 +11,8 @@ body {
   min-height: 100vh;
   padding: 2rem;
   margin: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 /* ---------- user‑panel (общий для всех) ---------- */
@@ -18,11 +20,13 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  max-width: 1400px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0.6rem 1.2rem;
   border-radius: 8px;
-  margin-bottom: 1.8rem;
+  margin: 0 auto 1rem;
   color: #ffffff;
   font-family: inherit;
 }
@@ -85,12 +89,179 @@ body {
 /* ---------- Основная панель (dashboard) ---------- */
 .dashboard {
   max-width: 1400px;
+  width: 100%;
   margin: 0 auto;
   background: #0b1a2e;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   padding: 2rem;
   box-shadow: none;
+}
+
+.site-footer {
+  width: 100%;
+  max-width: 1400px;
+  margin: 1.5rem auto 0;
+  padding: 0.9rem 0;
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.role-nav {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto 1.2rem;
+  padding: 0.45rem;
+  display: flex;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+.role-nav-btn {
+  flex: 1;
+  justify-content: center;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border-color: transparent;
+}
+
+.role-nav-btn.is-active {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.dashboard-view.hidden {
+  display: none;
+}
+
+.section-description {
+  margin-top: 0.35rem;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.92rem;
+}
+
+.empty-state {
+  padding: 2rem;
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.profile-form textarea,
+.profile-form input[type="text"],
+.profile-form input[type="tel"],
+.profile-form input[type="email"],
+.profile-form input[type="password"] {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  color: #ffffff;
+  font: inherit;
+}
+
+.profile-form textarea {
+  resize: vertical;
+}
+
+.profile-form input:focus,
+.profile-form textarea:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.36);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
+}
+
+.profile-settings {
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.checkbox-row input {
+  width: 18px;
+  height: 18px;
+  accent-color: #7fb2ff;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.dashboard-header h2 {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+}
+
+.saved-notification {
+  background: none;
+  color: #ffffff;
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
+}
+
+.saved-notification.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.list-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 0.9rem;
+}
+
+.list-controls.hidden {
+  display: none;
+}
+
+.icon-toggle-btn {
+  width: 40px;
+  height: 34px;
+  padding: 0;
+  justify-content: center;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.toggle-arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.icon-toggle-btn[aria-expanded="true"] .toggle-arrow {
+  transform: rotate(180deg);
 }
 
 /* ---------- Кнопки ---------- */
@@ -257,6 +428,12 @@ tr:hover td {
 
 tr.draggable {
   cursor: grab;
+}
+
+@media (max-width: 768px) {
+  .role-nav {
+    flex-direction: column;
+  }
 }
 
 tr.draggable:active {

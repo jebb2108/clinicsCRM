@@ -8,22 +8,80 @@
   <link rel="stylesheet" href="/css/nurse.css">
 </head>
 <body>
-  <div class="dashboard">
-
-    <div class="user-welcome">
-      <div class="welcome-text">
-        Добро пожаловать, <span id="user-name-display"></span>
-        <span class="role-badge" id="role-badge">Администратор</span>
-      </div>
-      <div class="info-line">
-        Сегодня: <span id="current-date"></span> | Вход: <span id="login-time"></span>
-      </div>
-      <button id="logout-btn" class="logout-btn">Выйти</button>
+  <div class="user-panel">
+    <div class="user-info">
+      Добро пожаловать, <span id="user-name-display" class="user-name"></span>
+      <span class="role-badge">Оперсестра</span>
     </div>
-
-    <h2>Оперсестра</h2>
-    <p>Раздел в разработке.</p>
+    <div class="info-line">
+      Сегодня: <span id="current-date"></span>
+    </div>
+    <button id="logout-btn" class="logout-btn">Выйти</button>
   </div>
+
+  <nav class="role-nav" aria-label="Разделы оперсестры">
+    <button class="role-nav-btn is-active" type="button" data-tab="current">Главная</button>
+    <button class="role-nav-btn" type="button" data-tab="profile">Личный кабинет</button>
+  </nav>
+
+  <div class="dashboard">
+    <div id="saved-notification" class="saved-notification hidden">✓ Сохранено</div>
+    <section class="dashboard-view is-active" data-view="current">
+      <div class="dashboard-header">
+        <div>
+          <h2>Оперсестра</h2>
+          <p class="section-description">Раздел подготовки рабочего места и сопровождения операций.</p>
+        </div>
+      </div>
+      <div class="empty-state">
+        Раздел в разработке.
+      </div>
+    </section>
+
+    <section class="dashboard-view hidden" data-view="profile">
+      <div class="dashboard-header">
+        <div>
+          <h2>Личный кабинет</h2>
+          <p class="section-description">Данные сотрудника и базовые настройки профиля.</p>
+        </div>
+      </div>
+      <form id="nurse-profile-form" class="profile-form">
+        <div class="form-row">
+          <label>Отображаемое имя
+            <input type="text" id="profile-name">
+          </label>
+          <label>Логин
+            <input type="text" id="profile-login">
+          </label>
+          <label>Пароль
+            <input type="password" id="profile-password">
+          </label>
+        </div>
+        <div class="form-row">
+          <label>Телефон
+            <input type="tel" id="profile-phone">
+          </label>
+          <label>Email
+            <input type="email" id="profile-email">
+          </label>
+          <label>Роль
+            <input type="text" id="profile-specialty">
+          </label>
+        </div>
+        <div class="form-row">
+          <label>Комментарий
+            <textarea id="profile-signature" rows="4" placeholder="Контакты и заметки по профилю"></textarea>
+          </label>
+        </div>
+        <div class="form-actions">
+          <button class="btn-primary" type="submit">Сохранить изменения</button>
+        </div>
+      </form>
+    </section>
+  </div>
+  <footer class="site-footer">
+    © 2026 ClinicsCRM. All rights reserved.
+  </footer>
   <script src="/js/storage.js"></script>
   <script src="/js/nurse.js"></script>
 </body>

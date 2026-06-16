@@ -4,7 +4,82 @@ if (sessionStorage.getItem('role') !== 'admin') {
 
 const tableBody = document.getElementById('table-body');
 const addForm = document.getElementById('add-form');
+const tableWrap = document.querySelector('.patients-table-wrap');
+const listControls = document.getElementById('admin-list-controls');
+const togglePatientListBtn = document.getElementById('toggle-patient-list');
+const togglePatientListLabel = document.getElementById('toggle-patient-list-label');
+const adminEmptyState = document.getElementById('admin-empty-state');
+const savedNotification = document.getElementById('saved-notification');
+const navButtons = Array.from(document.querySelectorAll('.role-nav-btn'));
+const dashboardViews = Array.from(document.querySelectorAll('.dashboard-view'));
+const profileForm = document.getElementById('admin-profile-form');
+const profileNameInput = document.getElementById('profile-name');
+const profileLoginInput = document.getElementById('profile-login');
+const profilePasswordInput = document.getElementById('profile-password');
+const profilePhoneInput = document.getElementById('profile-phone');
+const profileEmailInput = document.getElementById('profile-email');
+const profileSpecialtyInput = document.getElementById('profile-specialty');
+const profileSignatureInput = document.getElementById('profile-signature');
+const startTimeInput = document.getElementById('start-time');
 let draggedRowIndex = null;
+let isPatientListExpanded = false;
+
+function showSaved() {
+  if (!savedNotification) return;
+
+  savedNotification.classList.remove('hidden');
+  clearTimeout(savedNotification._timeout);
+  savedNotification._timeout = setTimeout(() => {
+    savedNotification.classList.add('hidden');
+  }, 2000);
+}
+
+function setActiveTab(tabName) {
+  navButtons.forEach(button => {
+    button.classList.toggle('is-active', button.dataset.tab === tabName);
+  });
+
+  dashboardViews.forEach(view => {
+    view.classList.toggle('hidden', view.dataset.view !== tabName);
+  });
+}
+
+function renderProfileForm() {
+  const account = getCredentials().admin || { name: '', login: '', password: '' };
+  const profile = getRoleProfile('admin');
+
+  profileNameInput.value = account.name || '';
+  profileLoginInput.value = account.login || '';
+  profilePasswordInput.value = account.password || '';
+  profilePhoneInput.value = profile.phone || '';
+  profileEmailInput.value = profile.email || '';
+  profileSpecialtyInput.value = profile.specialty || '';
+  profileSignatureInput.value = profile.signature || '';
+}
+
+function updatePatientListControls(totalRows) {
+  const hasPatients = totalRows > 0;
+  const canCollapse = totalRows > 5;
+
+  adminEmptyState.classList.toggle('hidden', hasPatients);
+  tableWrap.classList.toggle('hidden', !hasPatients);
+  tableWrap.classList.toggle('is-collapsed', canCollapse && !isPatientListExpanded);
+  listControls.classList.toggle('hidden', !canCollapse);
+
+  if (!canCollapse) {
+    isPatientListExpanded = false;
+    togglePatientListBtn.setAttribute('aria-expanded', 'false');
+    togglePatientListBtn.title = 'Развернуть список';
+    if (togglePatientListLabel) togglePatientListLabel.textContent = 'Развернуть список';
+    return;
+  }
+
+  togglePatientListBtn.setAttribute('aria-expanded', String(isPatientListExpanded));
+  togglePatientListBtn.title = isPatientListExpanded ? 'Свернуть список' : 'Развернуть список';
+  if (togglePatientListLabel) {
+    togglePatientListLabel.textContent = isPatientListExpanded ? 'Свернуть список' : 'Развернуть список';
+  }
+}
 
 // ========== Рендеринг таблицы ==========
 function renderTable() {
@@ -59,7 +134,50 @@ function renderTable() {
       }
     });
   });
+
+  updatePatientListControls(list.length);
 }
+
+togglePatientListBtn.addEventListener('click', () => {
+  isPatientListExpanded = !isPatientListExpanded;
+  updatePatientListControls(getOperationList().length);
+});
+
+navButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    setActiveTab(button.dataset.tab);
+  });
+});
+
+profileForm.addEventListener('submit', event => {
+  event.preventDefault();
+
+  const name = profileNameInput.value.trim();
+  const login = profileLoginInput.value.trim();
+  const password = profilePasswordInput.value.trim();
+
+  if (!name || !login || !password) {
+    alert('Заполните имя, логин и пароль.');
+    return;
+  }
+
+  const creds = getCredentials();
+  creds.admin = { name, login, password };
+  saveCredentials(creds);
+  saveRoleProfile('admin', {
+    phone: profilePhoneInput.value.trim(),
+    email: profileEmailInput.value.trim(),
+    specialty: profileSpecialtyInput.value.trim(),
+    signature: profileSignatureInput.value.trim()
+  });
+
+  sessionStorage.setItem('userName', name);
+  const userNameElement = document.getElementById('user-name');
+  if (userNameElement) {
+    userNameElement.textContent = name;
+  }
+  showSaved();
+});
 
 // ========== Drag & Drop ==========
 function handleDragStart(e) {
@@ -106,6 +224,8 @@ document.getElementById('cancel-add').addEventListener('click', () => {
 
 document.getElementById('add-type').addEventListener('change', function () {
   const durInput = document.getElementById('add-duration');
+  if (!durInput) return;
+
   if (this.value === 'ФЕМТО') durInput.value = 15;
   else if (this.value === 'ФРК') durInput.value = 10;
   else durInput.value = 15;
@@ -174,7 +294,7 @@ document.getElementById('add-pause-btn').addEventListener('click', () => {
 });
 
 // ========== Начало дня ==========
-document.getElementById('start-time').addEventListener('change', function () {
+startTimeInput.addEventListener('change', function () {
   const settings = getSettings();
   settings.startTime = this.value;
   saveSettings(settings);
@@ -272,5 +392,6 @@ function importPatientsFromExcel(event) {
 
 // ========== Инициализация ==========
 document.getElementById('excel-file').addEventListener('change', importPatientsFromExcel);
-document.getElementById('start-time').value = getSettings().startTime;
+startTimeInput.value = getSettings().startTime;
+renderProfileForm();
 renderTable();

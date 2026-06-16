@@ -8,10 +8,12 @@ body {
   font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, sans-serif;
   background: #0b1a2e;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   color: #e0e5ec;
+  padding: 2rem;
 }
 
 .auth-container {
@@ -24,6 +26,13 @@ body {
   background: #fefefe;
   backdrop-filter: blur(12px);
   padding: 2.5rem 2.5rem 2rem;
+}
+
+.site-footer {
+  margin-top: 1.5rem;
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 0.82rem;
+  text-align: center;
 }
 
 /* === ЛОГОТИП === */

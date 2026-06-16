@@ -5,6 +5,16 @@ if (sessionStorage.getItem('role') !== 'engineer') {
 const tbody = document.getElementById('creds-body');
 const savedNotification = document.getElementById('saved-notification');
 const saveBtn = document.getElementById('save-creds');
+const navButtons = Array.from(document.querySelectorAll('.role-nav-btn'));
+const dashboardViews = Array.from(document.querySelectorAll('.dashboard-view'));
+const profileForm = document.getElementById('engineer-profile-form');
+const profileNameInput = document.getElementById('profile-name');
+const profileLoginInput = document.getElementById('profile-login');
+const profilePasswordInput = document.getElementById('profile-password');
+const profilePhoneInput = document.getElementById('profile-phone');
+const profileEmailInput = document.getElementById('profile-email');
+const profileSpecialtyInput = document.getElementById('profile-specialty');
+const profileSignatureInput = document.getElementById('profile-signature');
 
 // Заполнение user-panel
 const userName = sessionStorage.getItem('userName') || 'Инженер';
@@ -19,6 +29,29 @@ function showSaved() {
   savedNotification._timeout = setTimeout(() => {
     savedNotification.classList.add('hidden');
   }, 2000);
+}
+
+function setActiveTab(tabName) {
+  navButtons.forEach(button => {
+    button.classList.toggle('is-active', button.dataset.tab === tabName);
+  });
+
+  dashboardViews.forEach(view => {
+    view.classList.toggle('hidden', view.dataset.view !== tabName);
+  });
+}
+
+function renderProfileForm() {
+  const account = getCredentials().engineer || { name: '', login: '', password: '' };
+  const profile = getRoleProfile('engineer');
+
+  profileNameInput.value = account.name || '';
+  profileLoginInput.value = account.login || '';
+  profilePasswordInput.value = account.password || '';
+  profilePhoneInput.value = profile.phone || '';
+  profileEmailInput.value = profile.email || '';
+  profileSpecialtyInput.value = profile.specialty || '';
+  profileSignatureInput.value = profile.signature || '';
 }
 
 // Отрисовка таблицы с актуальными учётными данными
@@ -54,6 +87,39 @@ saveBtn.addEventListener('click', () => {
     saveCredentials(creds);
     showSaved();
   }
+});
+
+navButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    setActiveTab(button.dataset.tab);
+  });
+});
+
+profileForm.addEventListener('submit', event => {
+  event.preventDefault();
+
+  const name = profileNameInput.value.trim();
+  const login = profileLoginInput.value.trim();
+  const password = profilePasswordInput.value.trim();
+
+  if (!name || !login || !password) {
+    alert('Заполните имя, логин и пароль.');
+    return;
+  }
+
+  const creds = getCredentials();
+  creds.engineer = { name, login, password };
+  saveCredentials(creds);
+  saveRoleProfile('engineer', {
+    phone: profilePhoneInput.value.trim(),
+    email: profileEmailInput.value.trim(),
+    specialty: profileSpecialtyInput.value.trim(),
+    signature: profileSignatureInput.value.trim()
+  });
+
+  sessionStorage.setItem('userName', name);
+  document.getElementById('user-name-display').textContent = name;
+  showSaved();
 });
 
 function normalizePatientType(type) {
@@ -135,4 +201,5 @@ document.getElementById('download-patients').addEventListener('click', downloadP
 document.getElementById('user-name-display').textContent = userName;
 document.getElementById('current-date').textContent = today;
 
+renderProfileForm();
 renderCredentials();
